@@ -1,0 +1,9 @@
+Niños Rancios — V127.14 icono de candado en carrito
+
+Cambios realizados:
+- Se sustituyó el icono de candado de la leyenda "Secure Checkout" por el SVG recortado subido por el usuario.
+- Se agregó el archivo: assets/icons/cart/icono-candado.svg
+- Se actualizó la maquetación para mostrar el icono SVG junto al texto.
+
+Base:
+- Esta versión parte de la V127.13.

@@ -1,0 +1,15 @@
+V69 - MENÚ DESPLEGABLE EN EL NOMBRE DEL CLIENTE
+
+Cambios realizados:
+- Cuando el cliente ha iniciado sesión, al hacer clic sobre su nombre o la flecha del encabezado se despliega un menú.
+- El menú incluye:
+  • Perfil
+  • Mis Pedidos
+  • Cerrar Sesión
+- “Perfil” abre la sección de perfil en account.html.
+- “Mis Pedidos” abre directamente la pestaña de pedidos en account.html.
+- “Cerrar Sesión” cierra la sesión desde el menú del encabezado.
+
+Notas:
+- En móvil se conserva el acceso normal a la cuenta.
+- Se añadió soporte para abrir pestañas específicas de account.html usando #profile, #orders y #address.

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Búsqueda de pedido | Niños Rancios</title>
+</head>
+<body>
+  <div data-shell-header></div>
+
+  <main class="lookup-page-alt">
+    <section class="lookup-title-band">
+      <h1>BÚSQUEDA DE PEDIDO</h1>
+    </section>
+
+    <section class="lookup-form-section">
+      <div class="lookup-form-shell">
+        <form class="lookup-form-alt" id="lookup-form">
+          <input type="text" id="lookup-name" name="name" placeholder="NOMBRE COMPLETO" autocomplete="name">
+          <input type="email" id="lookup-email" name="email" placeholder="CORREO ELECTRÓNICO" autocomplete="email" required>
+          <textarea id="lookup-order" name="orderNumber" placeholder="NÚMERO O CONFIRMACIÓN DE PEDIDO" required></textarea>
+          <button type="submit" id="lookup-submit">Encontrar pedido</button>
+        </form>
+        <div class="lookup-result-alt" id="lookup-result" tabindex="-1" aria-live="polite" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <div data-shell-benefits></div>
+  <div data-shell-footer></div>
+
+  <script src="app.js"></script>
+  <script>
+  mountShell('');
+  const form=document.getElementById('lookup-form');
+  const result=document.getElementById('lookup-result');
+  const submit=document.getElementById('lookup-submit');
+  const orderInput=document.getElementById('lookup-order');
+  const emailInput=document.getElementById('lookup-email');
+  const nameInput=document.getElementById('lookup-name');
+  const lookupEsc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const lookupMoney=n=>'MX$'+Number(n||0).toFixed(2);
+  const lookupDate=value=>{if(!value)return '—';const d=new Date(value);return Number.isNaN(d.getTime())?'—':d.toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'})};
+  function lookupTransferHtml(order){
+    if(order.paymentMethod!=='Transferencia bancaria'||!order.transfer)return '';
+    const t=order.transfer,b=t.bank||{},proof=t.proof;
+    const rows=[
+      b.bankName?`<div><span>Banco</span><strong>${lookupEsc(b.bankName)}</strong></div>`:'',
+      b.accountHolder?`<div><span>Titular</span><strong>${lookupEsc(b.accountHolder)}</strong></div>`:'',
+      b.clabe?`<div><span>CLABE</span><strong>${lookupEsc(b.clabe)}</strong></div>`:'',
+      b.accountNumber?`<div><span>Número de cuenta</span><strong>${lookupEsc(b.accountNumber)}</strong></div>`:'',
+      b.cardNumber?`<div><span>Número de tarjeta</span><strong>${lookupEsc(b.cardNumber)}</strong></div>`:''
+    ].filter(Boolean).join('');
+    const canUpload=b.proofUploadEnabled!==false&&order.paymentStatus!=='Pagado'&&order.status!=='Cancelado';
+    const uploader=canUpload?`<form class="transfer-proof-form lookup-transfer-proof" id="lookup-transfer-proof"><label>Comprobante<input id="lookup-transfer-file" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required><small>JPG, PNG, WEBP o PDF · máximo 8 MB</small></label><button type="submit">${proof?'Reemplazar comprobante':'Enviar comprobante'}</button><p id="lookup-transfer-message" class="transfer-proof-message">${proof?`Comprobante recibido · ${lookupEsc(lookupDate(proof.uploadedAt))}`:''}</p></form>`:(proof?`<div class="transfer-proof-received">✓ Comprobante recibido · ${lookupEsc(lookupDate(proof.uploadedAt))}</div>`:'');
+    return `<div class="lookup-transfer-box"><h3>Pago por transferencia</h3><div class="transfer-bank-grid">${rows}<div><span>Referencia</span><strong>${lookupEsc(t.reference||order.orderNumber)}</strong></div><div><span>Plazo sugerido</span><strong>${lookupEsc(lookupDate(t.expiresAt))}</strong></div></div>${b.instructions?`<p class="transfer-instructions">${lookupEsc(b.instructions)}</p>`:''}${uploader}</div>`;
+  }
+  function bindLookupTransferProof(order){
+    const proofForm=document.getElementById('lookup-transfer-proof');if(!proofForm)return;
+    proofForm.addEventListener('submit',async e=>{
+      e.preventDefault();const input=document.getElementById('lookup-transfer-file'),msg=document.getElementById('lookup-transfer-message'),btn=proofForm.querySelector('button');if(!input?.files?.[0])return;
+      const body=new FormData();body.append('orderNumber',order.orderNumber);body.append('email',order.customer?.email||'');body.append('proof',input.files[0]);
+      btn.disabled=true;btn.textContent='Enviando…';if(msg)msg.textContent='Subiendo comprobante…';
+      try{const response=await fetch('/api/orders/transfer-proof',{method:'POST',body});const data=await response.json().catch(()=>({}));if(!response.ok||!data.order)throw new Error(data.error||'No fue posible subir el comprobante.');renderOrder(data.order)}
+      catch(err){if(msg)msg.textContent=err.message||'No fue posible subir el comprobante.';btn.disabled=false;btn.textContent='Enviar comprobante'}
+    });
+  }
+  const params=new URLSearchParams(location.search);
+  const last=(()=>{try{return JSON.parse(sessionStorage.getItem('nr_last_order')||'{}')}catch(e){return{}}})();
+  orderInput.value=params.get('order')||params.get('orderNumber')||last.orderNumber||'';
+  emailInput.value=params.get('email')||last.email||'';
+  nameInput.value=params.get('name')||'';
+
+  function revealLookupResult({focus=true}={}){
+    result.hidden=false;
+    requestAnimationFrame(()=>{
+      result.scrollIntoView({behavior:'smooth',block:'start'});
+      if(focus)setTimeout(()=>result.focus({preventScroll:true}),320);
+    });
+  }
+
+  function renderOrder(order){
+    const fullName=[order.customer?.nombre,order.customer?.apellidos].filter(Boolean).join(' ');
+    if(fullName&&!nameInput.value)nameInput.value=fullName;
+    const created=order.createdAt?new Date(order.createdAt).toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'}):'—';
+    const local=order.deliveryMethod==='Entrega local';
+    const transfer=order.paymentMethod==='Transferencia bancaria';
+    const steps=transfer?(local?['Pendiente de pago','Pagado','Preparando','Entregado']:['Pendiente de pago','Pagado','Preparando','Enviado','Entregado']):(local?(order.paymentMethod==='Contraentrega'?['Nuevo','Preparando','Entregado']:['Pagado','Preparando','Entregado']):['Pagado','Preparando','Enviado','Entregado']);
+    const currentIndex=Math.max(0,steps.indexOf(order.status));
+    const shipment=order.shipment||{};
+    const trackingUrl=/^https?:\/\//i.test(shipment.trackingUrl||'')?shipment.trackingUrl:'';
+
+    result.classList.remove('lookup-error');
+    result.innerHTML=`
+      <div class="lookup-order-head">
+        <div><span>Pedido</span><strong>${lookupEsc(order.orderNumber)}</strong></div>
+        <div><span>Estado</span><strong class="lookup-status">${lookupEsc(order.status)}</strong></div>
+      </div>
+
+      <div class="lookup-progress">
+        ${steps.map((step,index)=>`<div class="lookup-progress-step ${index<=currentIndex?'done':''} ${step===order.status?'current':''}">
+          <span>${index+1}</span><strong>${lookupEsc(step)}</strong>
+        </div>`).join('')}
+      </div>
+
+      <div class="lookup-order-meta">
+        <span>Pago: <strong>${lookupEsc(order.paymentStatus)}</strong></span>
+        <span>Método: <strong>${lookupEsc(order.paymentMethod)}</strong></span>
+        <span>Fecha: <strong>${lookupEsc(created)}</strong></span>
+        <span>Entrega: <strong>${lookupEsc(order.deliveryMethod||'Envío nacional')}</strong></span>
+      </div>
+
+      ${shipment.trackingNumber||shipment.carrier?`
+        <div class="lookup-shipment">
+          <div><span>Paquetería</span><strong>${lookupEsc(shipment.carrier||'Por confirmar')}</strong></div>
+          <div><span>Número de guía</span><strong>${lookupEsc(shipment.trackingNumber||'Por confirmar')}</strong></div>
+          ${trackingUrl?`<a href="${lookupEsc(trackingUrl)}" target="_blank" rel="noopener noreferrer">Rastrear envío ↗</a>`:''}
+        </div>`:''}
+
+      ${lookupTransferHtml(order)}
+      <div class="lookup-order-items">
+        ${order.items.map(item=>`<div class="lookup-order-item"><div><strong>${lookupEsc(item.name)}</strong><small>${lookupEsc(item.color)} · Talla ${lookupEsc(item.size)} · Cant. ${item.qty}</small></div><span>${lookupMoney(item.lineTotal)}</span></div>`).join('')}
+      </div>
+      <div class="lookup-order-total"><span>Total</span><strong>${lookupMoney(order.totals.total)}</strong></div>`;
+    revealLookupResult();
+    if(history.replaceState)history.replaceState(null,'',location.pathname+location.search+'#lookup-result');
+    bindLookupTransferProof(order);
+  }
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    submit.disabled=true;
+    submit.textContent='Buscando…';
+    result.classList.remove('lookup-error');
+    result.textContent='Consultando pedido…';
+    revealLookupResult({focus:false});
+    try{
+      const response=await fetch('/api/orders/lookup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderNumber:orderInput.value.trim(),email:emailInput.value.trim()})});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok||!data.order)throw new Error(data.error||'No fue posible consultar el pedido.');
+      renderOrder(data.order);
+    }catch(err){
+      result.classList.add('lookup-error');
+      result.innerHTML=`<strong>No encontramos el pedido.</strong><br>${lookupEsc(err.message||'Revisa los datos e intenta nuevamente.')}`;
+      revealLookupResult();
+    }finally{
+      submit.disabled=false;
+      submit.textContent='Encontrar pedido';
+    }
+  });
+  </script>
+</body>
+</html>

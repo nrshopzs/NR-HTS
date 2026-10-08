@@ -1,0 +1,10 @@
+Niños Rancios — V127.23 corrección al cambiar contraseña
+
+Correcciones:
+- Se corrigió el error "Cannot read properties of null (reading 'reset')" que aparecía después de cambiar la contraseña correctamente.
+- La causa era el uso de e.currentTarget después de una operación asíncrona.
+- Ahora el formulario se guarda en una referencia antes del await y se reinicia de forma segura.
+- Después de un cambio exitoso, los tres campos vuelven a modo contraseña y los iconos de ojo regresan a su estado oculto.
+
+Base:
+- Esta versión parte de V127.22.

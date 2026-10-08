@@ -1,0 +1,11 @@
+Niños Rancios — V127.33 · Bloque promocional editable en Inicio
+
+Cambios:
+- Nuevo bloque promocional opcional en la página principal, colocado después de la cinta negra y justo antes de la franja verde de beneficios.
+- Puede activarse/desactivarse desde Administración > Portada.
+- Permite subir/cambiar imagen, elegir lado de la imagen, posición y proporción.
+- Permite editar título y texto secundario con fuente, peso/negrita, cursiva, color, tamaño escritorio/móvil, alineación, espaciado y posición X/Y independiente.
+- Permite editar botón: mostrar/ocultar, texto, enlace, colores, borde, radio, fuente, peso, cursiva, alineación, tamaño, dimensiones y posición X/Y para escritorio/móvil.
+- Incluye vista previa dentro del panel de administración.
+
+Base: V127.32.

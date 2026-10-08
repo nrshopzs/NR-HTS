@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+  <title>Confirmar correo | Niños Rancios</title>
+</head>
+<body>
+  <div data-shell-header></div>
+  <main class="account-action-page">
+    <section class="account-action-card">
+      <p class="account-kicker">CUENTA</p>
+      <h1 id="verify-title">Confirma tu correo</h1>
+      <p id="verify-copy">Para continuar, confirma que esta dirección de correo te pertenece.</p>
+      <button type="button" id="verify-action">Confirmar correo</button>
+      <p class="account-message account-action-message" id="verify-message"></p>
+      <a class="account-action-link" id="verify-finish" href="account.html" hidden>Ir a mi cuenta</a>
+    </section>
+  </main>
+  <div data-shell-footer></div>
+  <script src="app.js"></script>
+  <script>
+    mountShell('');
+    const params=new URLSearchParams(location.search),token=params.get('token')||'',action=params.get('action')==='email-change'?'email-change':'verify';
+    const title=document.getElementById('verify-title'),copy=document.getElementById('verify-copy'),button=document.getElementById('verify-action'),message=document.getElementById('verify-message'),finish=document.getElementById('verify-finish');
+    if(action==='email-change'){title.textContent='Confirma tu nuevo correo';copy.textContent='Confirma esta dirección para completar el cambio de correo de tu cuenta.';button.textContent='Confirmar nuevo correo'}
+    if(!token){button.disabled=true;message.textContent='Este enlace no contiene un token válido.'}
+    button.addEventListener('click',async()=>{button.disabled=true;message.textContent='Confirmando…';try{const endpoint=action==='email-change'?'/api/account/email/change-confirm':'/api/account/verify-email';const res=await fetch(endpoint,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error||'No fue posible confirmar el correo.');message.textContent=data.message||'Correo confirmado.';button.hidden=true;if(action==='verify'&&typeof completePendingFavoriteAfterLogin==='function'&&(await completePendingFavoriteAfterLogin()))return;finish.hidden=false;finish.textContent=action==='email-change'?'Volver a Mi cuenta':'Entrar a Mi cuenta'}catch(err){message.textContent=err.message;button.disabled=false}});
+  </script>
+</body>
+</html>

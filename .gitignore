@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+server/node_modules/
+
+# Secretos
+server/.env
+.env
+.env.*
+!server/.env.example
+
+# Datos privados generados en producción
+server/data/orders.json
+server/data/payment-drafts.json
+server/data/customers.json
+server/data/customer-sessions.json
+server/data/customer-action-tokens.json
+server/data/promotion-usage.json
+server/data/email-log.json
+server/data/manual-email-log.json
+server/data/transfer-proofs/*
+!server/data/transfer-proofs/README.txt
+
+# Temporales
+*.tmp
+.DS_Store
+Thumbs.db

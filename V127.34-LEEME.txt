@@ -1,0 +1,10 @@
+Niños Rancios — V127.34 Bloque promocional más compacto
+
+Cambios:
+- Se redujo la altura predeterminada del bloque promocional de 520 px a 430 px en escritorio.
+- Se redujo la altura de la imagen móvil de 320 px a 250 px.
+- Se redujeron los espacios internos verticales para un aspecto más compacto.
+- Los controles del panel para ajustar manualmente la altura se conservan.
+- Los valores predeterminados heredados de V127.33 (520/320) se migran automáticamente a 430/250.
+
+Base: V127.33.

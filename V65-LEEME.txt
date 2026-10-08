@@ -1,0 +1,20 @@
+V65 - PEDIDOS, ENVÍOS Y RASTREO
+
+Novedades del panel:
+- Botón "Ver / gestionar" para cada pedido.
+- Vista completa del cliente, dirección, productos y total.
+- Cambio de estado: Pagado > Preparando > Enviado > Entregado.
+- Registro de historial de cambios de estado.
+- Paquetería.
+- Número de guía.
+- Enlace de rastreo.
+- Fechas de enviado y entregado se registran automáticamente al cambiar estado.
+
+Novedades para el cliente:
+- En "Búsqueda de pedido" aparece una barra visual de progreso.
+- Si el administrador agrega datos de envío, el cliente ve:
+  paquetería, número de guía y botón para rastrear el paquete.
+
+Compatibilidad:
+- Los pedidos antiguos siguen funcionando aunque no tengan los campos nuevos.
+- Conserva tu archivo .env y tu carpeta server/data.

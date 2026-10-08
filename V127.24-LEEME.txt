@@ -1,0 +1,9 @@
+Niños Rancios — V127.24 Ojo en acceso privado de Colaboraciones
+
+Base: V127.23
+
+Cambio:
+- Se sustituyó el texto "Ver/Ocultar" del campo de contraseña en el acceso privado de Colaboraciones por un icono de ojo.
+- Al pulsarlo se muestra u oculta la contraseña.
+- El icono cambia visualmente a ojo tachado cuando la contraseña está visible.
+- No se modificó la lógica de protección, contraseña ni desbloqueo de la página.

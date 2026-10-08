@@ -1,0 +1,8 @@
+Niños Rancios — V127.37 IVA incluido en totales
+
+Cambios:
+- Checkout: se añadió la leyenda "IVA incluido" debajo del total.
+- Confirmación de compra: se añadió la leyenda "IVA incluido" debajo del total pagado / total a pagar.
+- No se modificó el cálculo de precios, envíos, descuentos ni pagos; es un ajuste informativo/visual.
+
+Base: V127.36.

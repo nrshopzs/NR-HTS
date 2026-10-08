@@ -1,0 +1,17 @@
+V99 - GALERÍA DE IMÁGENES AL PASAR EL MOUSE
+
+Único cambio solicitado:
+- Al dejar el mouse sobre una tarjeta de producto, la imagen recorre
+  automáticamente otras fotos asociadas al mismo producto.
+- Se consideran:
+  1) imágenes adjuntas al producto desde Administración;
+  2) imágenes correspondientes a otras variantes/colores;
+  3) la imagen principal.
+- Al retirar el mouse, vuelve a la imagen principal.
+- El cambio utiliza un fundido corto para evitar saltos visuales.
+- Solo se ejecuta en dispositivos que realmente tienen hover/mouse.
+- Si un producto solo tiene una imagen, no ocurre ningún cambio.
+
+No se añadieron controles, textos, flechas ni efectos nuevos a la tarjeta.
+Las funciones existentes de Vista rápida y Agregar al carrito se conservaron
+sin modificaciones.

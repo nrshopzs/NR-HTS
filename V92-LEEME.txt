@@ -1,0 +1,14 @@
+V92 - MENÚ CON OPACIDAD PROGRESIVA AL DESPLAZAR
+
+Nuevo comportamiento:
+- Al desplazar la página hacia abajo, la barra principal reduce gradualmente
+  su opacidad hasta desaparecer.
+- Al desplazar hacia arriba, aumenta gradualmente su opacidad hasta reaparecer.
+- Al volver al inicio de la página, recupera automáticamente 100% de opacidad.
+- El efecto funciona con rueda del mouse y también tiene respaldo para
+  touchpad, teclado, barra de desplazamiento y dispositivos táctiles.
+- Ya no se desplaza físicamente hacia arriba: el efecto es principalmente
+  de desvanecimiento, como se solicitó.
+
+No se modificaron las funciones del carrito, checkout, productos, promociones,
+cuentas, pedidos ni el panel de administración.

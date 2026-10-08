@@ -1,0 +1,15 @@
+V118 — PayPal Webhook
+
+Base: V117 PayPal Checkout.
+
+Añadido:
+- Endpoint POST /api/paypal/webhook.
+- Verificación de firma contra la API oficial de PayPal usando PAYPAL_WEBHOOK_ID.
+- Procesamiento idempotente de PAYMENT.CAPTURE.COMPLETED.
+- Registro de PAYMENT.CAPTURE.DENIED y PAYMENT.CAPTURE.REFUNDED.
+- /api/paypal/config informa si el webhook está configurado.
+
+Variable nueva en server/.env:
+PAYPAL_WEBHOOK_ID=...
+
+Para pruebas locales, el endpoint debe exponerse con una URL HTTPS pública temporal.

@@ -1,0 +1,24 @@
+NIÑOS RANCIOS V127.46 — PIE DE PÁGINA EDITABLE DESDE ADMINISTRACIÓN
+
+Base: V127.45.
+
+CAMBIO SOLICITADO
+- El teléfono del pie de página cambia a 7571541553.
+- Facebook redirige a https://facebook.com/ninosrancios.
+- Instagram redirige a https://instagram.com/ninosrancios.
+- Estos tres valores ahora se pueden editar desde Panel de administración > Portada > Pie de página · Contacto y redes.
+
+IMPLEMENTACIÓN
+- Los valores se guardan dentro de server/data/homepage.json, aprovechando el sistema de configuración de portada ya existente.
+- El API público /api/homepage entrega los valores sanitizados al frontend.
+- El teléfono se convierte en enlace tel: para dispositivos compatibles.
+- Facebook e Instagram se abren en una pestaña nueva con rel="noopener noreferrer".
+- Si la API no responde, el frontend conserva como fallback los valores anteriores de esta versión: teléfono 7571541553 y redes /ninosrancios.
+
+PRESERVADO
+- No se modificó la lógica de catálogo, carrito, checkout, pagos, pedidos, cuentas, favoritos, newsletter, correos, inventario, mantenimiento, colaboraciones ni seguridad heredada.
+- Se conserva V127.45 como respaldo anterior.
+- Se conserva el mantenimiento PostgreSQL/Wasmer agregado en V127.45.
+
+NOTA PARA WASMER
+- Mientras DATA_BACKEND=json, las configuraciones editadas desde el panel dependen de la persistencia del almacenamiento donde corre la app, igual que las demás configuraciones JSON existentes. No cambia el comportamiento previo del proyecto.

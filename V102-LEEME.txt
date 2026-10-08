@@ -1,0 +1,6 @@
+V102 - Hover de productos ajustado a 15 ms
+
+- Cambio entre imágenes cada 15 ms.
+- Sigue mostrando cada imagen solo una vez.
+- Se detiene en la última imagen.
+- Al quitar el mouse, vuelve a la imagen principal.

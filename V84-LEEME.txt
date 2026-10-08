@@ -1,0 +1,23 @@
+V84 - PORTADA RESPONSIVE / MÓVIL CORREGIDA
+
+Problema resuelto:
+Los textos de escritorio se reutilizaban casi igual en móvil, por eso podían
+verse demasiado grandes, partidos o encimados en pantallas como iPhone SE.
+
+Novedades del editor de portada:
+- Vista previa "Escritorio".
+- Vista previa "Móvil 375 px".
+- Cada texto tiene posición X/Y independiente para escritorio.
+- Cada texto tiene posición X/Y independiente para móvil.
+- Cada texto tiene un tamaño de fuente independiente para móvil.
+- Botón "Ajustar móvil automáticamente" para crear una base proporcional.
+- La escala general móvil ahora parte de 100%.
+
+Migración:
+Los datos antiguos siguen funcionando. Cuando un texto todavía no tiene
+configuración móvil, el servidor genera automáticamente un tamaño móvil seguro.
+
+IMPORTANTE:
+Conserva tu server/data actual para mantener tus imágenes, diapositivas y textos.
+La primera vez que abras/guardes la portada en V84, los nuevos campos móviles se
+integrarán a la configuración existente.

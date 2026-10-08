@@ -1,0 +1,9 @@
+Niños Rancios — V127.26 Hero video sin destello de imagen
+
+Cambios:
+- Cuando una diapositiva del hero está configurada como Video, la imagen ya no se usa como poster visible durante la carga normal.
+- El hero muestra un fondo oscuro mientras se carga el primer fotograma del video.
+- El video aparece con una transición muy corta cuando está listo para reproducirse.
+- La imagen configurada se conserva y solo se usa como respaldo si el video falla al cargar.
+- La vista previa del panel de administración también deja de usar la imagen como poster del video.
+- Todo lo demás de V127.25 se conserva.

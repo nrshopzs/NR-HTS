@@ -1,0 +1,2 @@
+V79 - Botón del mini carrito en color amarillo
+Se cambió el botón "Ver carrito / pagar" del panel lateral del carrito a color amarillo.

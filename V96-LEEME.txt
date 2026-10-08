@@ -1,0 +1,3 @@
+V96
+- Se ajustó la sombra del menú para que sea menos difusa y más parecida a la referencia de Wix.
+- Nueva sombra: 0 2px 7px rgba(0,0,0,.16)

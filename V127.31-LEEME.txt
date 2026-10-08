@@ -1,0 +1,10 @@
+Niños Rancios — V127.31 sin líneas separadoras
+
+Cambios realizados:
+- Se eliminó la línea decorativa debajo de “🔥 HOT 🔥” en la página principal.
+- Se eliminaron las líneas decorativas equivalentes en Nosotros, Envíos, Cambios y devoluciones, Aviso de privacidad, Contacto/Puntos de venta y Colaboraciones.
+- Se conservaron espacios equivalentes para que los textos no queden pegados al contenido siguiente.
+- No se modificó la lógica de la tienda.
+
+Base:
+- Esta versión parte de la V127.30.

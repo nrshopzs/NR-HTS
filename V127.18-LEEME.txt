@@ -1,0 +1,11 @@
+Niños Rancios — V127.18 Login solo con correo
+
+Cambios realizados:
+- Se retiraron las opciones de iniciar sesión con Google y Facebook.
+- Se retiraron las opciones de registro con Google y Facebook.
+- El formulario de correo electrónico queda visible directamente tanto al iniciar sesión como al crear una cuenta.
+- Se agregó un icono de ojo dentro del campo Contraseña en inicio de sesión y registro.
+- El icono permite mostrar y volver a ocultar la contraseña y conserva atributos de accesibilidad.
+
+Base:
+- Esta versión parte de la V127.17.

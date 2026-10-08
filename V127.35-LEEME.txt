@@ -1,0 +1,12 @@
+Niños Rancios — V127.35 · Bloque dividido debajo del hero
+
+Cambios:
+- Nuevo bloque de imagen + texto inmediatamente debajo del hero de Inicio.
+- Tamaño predeterminado compacto: 360 px de alto en escritorio.
+- Imagen a izquierda o derecha.
+- Título, subtítulo y botón editables desde Administración → Portada.
+- Permite activar/desactivar el bloque.
+- Permite cambiar imagen, fondo, tipografías, tamaños, estilos, alineación y apariencia del botón.
+- Diseño responsive para móvil con imagen apilada y altura reducida.
+
+Base: V127.34.

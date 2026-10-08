@@ -1,0 +1,9 @@
+V108
+
+Ajuste realizado:
+- La cinta de texto animada ahora aparece también en las demás páginas del sitio que usan la franja de beneficios.
+- Se excluyó de estas páginas: cart.html, checkout.html, payment-success.html y order-lookup.html.
+- No se tocó la ventana emergente de inicio de sesión.
+
+Archivo principal actualizado:
+- app.js

@@ -1,0 +1,41 @@
+NIÑOS RANCIOS — V126 · CUENTAS Y RECUPERACIÓN DE CONTRASEÑA
+
+Base: V125 Centro de correo (estable).
+
+NOVEDADES
+- Registro con verificación obligatoria de correo para cuentas nuevas.
+- Correo de bienvenida después de confirmar la cuenta.
+- ¿Olvidaste tu contraseña? con enlace seguro de un solo uso y caducidad de 60 minutos.
+- Cambio de contraseña desde Mi cuenta, solicitando la contraseña actual.
+- Cambio de correo desde Mi cuenta: contraseña actual + verificación del nuevo correo.
+- Aviso automático al correo anterior cuando el cambio de correo se confirma.
+- Indicador de correo verificado en Mi cuenta.
+- Reenvío de verificación desde el login.
+- Las nuevas plantillas de cuenta se editan desde Panel > Correos > Plantillas y diseño.
+- Los enlaces de verificación/restablecimiento usan PUBLIC_BASE_URL durante las pruebas.
+
+COMPATIBILIDAD
+Las cuentas creadas antes de V126 no tenían el campo emailVerifiedAt. V126 las considera verificadas para no bloquear usuarios existentes. Las cuentas creadas desde V126 sí deben confirmar su correo.
+
+MIGRACIÓN DESDE TU V125 LOCAL
+1. Copia server\.env de V125 a V126.
+2. Para conservar pedidos, inventario, clientes y tus plantillas personalizadas, copia el CONTENIDO de V125\server\data\ a V126\server\data\.
+3. Si subiste un logo para los correos, copia también V125\assets\email\uploads\ a V126\assets\email\uploads\.
+4. No copies node_modules. En V126\server ejecuta: npm install y luego npm start.
+5. Mantén tu túnel Cloudflare activo. PUBLIC_BASE_URL debe apuntar al túnel vigente para que los enlaces enviados por correo funcionen durante las pruebas.
+
+PRUEBAS RECOMENDADAS
+A) Crear una cuenta nueva: debe llegar el correo de verificación y no debe permitir iniciar sesión antes de verificar.
+B) Confirmar correo: debe activar la cuenta, iniciar sesión y enviar el correo de bienvenida.
+C) ¿Olvidaste tu contraseña?: debe llegar un enlace, permitir cambiar la contraseña y luego iniciar sesión con la nueva.
+D) Mi cuenta > Cambiar contraseña: debe pedir la contraseña actual y enviar aviso de seguridad.
+E) Mi cuenta > Cambiar correo: debe mandar verificación al correo nuevo; al confirmar, debe avisar al correo anterior.
+F) Panel > Correos: deben aparecer las nuevas plantillas de cuenta y poder editarse como las demás.
+
+SEGURIDAD
+- Los tokens se guardan solamente como hash SHA-256 en server/data/customer-action-tokens.json.
+- Verificación de correo: 24 horas.
+- Recuperación de contraseña: 60 minutos.
+- Cambio de correo: 60 minutos.
+- Los tokens son de un solo uso.
+- Al cambiar correo o restablecer contraseña se invalidan sesiones anteriores.

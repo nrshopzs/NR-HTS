@@ -1,0 +1,2 @@
+V77 - Ajuste de tamaño/proporción de iconos en la franja verde.
+Se aumentó el tamaño de los 3 iconos y la altura del bloque para acercarlo a la referencia enviada.

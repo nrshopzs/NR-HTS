@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="account.css">
+  <title>Mi cuenta | Niños Rancios</title>
+</head>
+<body>
+  <div data-shell-header></div>
+
+  <main class="account-page">
+<section class="account-dashboard" id="account-dashboard" hidden>
+      <aside class="account-sidebar">
+        <div class="account-sidebar-user">
+          <div class="account-avatar" id="account-avatar">NR</div>
+          <strong id="account-sidebar-name">Mi cuenta</strong>
+          <span id="account-sidebar-email"></span>
+        </div>
+
+        <nav class="account-sidebar-nav">
+          <button type="button" class="selected" data-account-tab="summary">Resumen</button>
+          <button type="button" data-account-tab="orders">Mis pedidos</button>
+          <button type="button" data-account-tab="favorites">Mis favoritos</button>
+          <button type="button" data-account-tab="profile">Mi cuenta</button>
+          <button type="button" data-account-tab="address">Mis direcciones</button>
+        </nav>
+
+        <button type="button" class="account-logout account-logout-side" id="account-logout">Cerrar sesión</button>
+      </aside>
+
+      <div class="account-content">
+        <section class="account-panel selected" data-account-panel="summary">
+          <div class="account-page-head">
+            <p class="account-kicker">PERFIL</p>
+            <h2 id="account-summary-title">Mi cuenta</h2>
+          </div>
+
+          <section class="account-summary-block">
+            <div class="account-section-head">
+              <div>
+                <h3>Último pedido</h3>
+              </div>
+            </div>
+            <div id="account-summary-last-order"></div>
+          </section>
+
+          <section class="account-summary-block">
+            <div class="account-section-head">
+              <h3>Detalles</h3>
+              <button type="button" class="account-link-button" data-go-tab="profile">Editar</button>
+            </div>
+            <div class="account-detail-grid">
+              <div><span>Nombre</span><strong id="account-detail-name">—</strong></div>
+              <div><span>Correo</span><strong id="account-detail-email">—</strong></div>
+              <div><span>Teléfono</span><strong id="account-detail-phone">—</strong></div>
+              <div><span>Contraseña</span><strong>••••••••</strong></div>
+            </div>
+          </section>
+
+          <section class="account-addresses-grid">
+            <article class="account-summary-block">
+              <div class="account-section-head">
+                <h3>Dirección de envío</h3>
+                <button type="button" class="account-link-button" data-go-tab="address">Editar</button>
+              </div>
+              <div id="account-summary-shipping" class="account-address-preview">No tienes una dirección de envío registrada.</div>
+            </article>
+
+            <article class="account-summary-block">
+              <div class="account-section-head">
+                <h3>Dirección de facturación</h3>
+                <button type="button" class="account-link-button" data-go-tab="address">Editar</button>
+              </div>
+              <div id="account-summary-billing" class="account-address-preview">No tienes una dirección de facturación registrada.</div>
+            </article>
+          </section>
+        </section>
+
+        <section class="account-panel" data-account-panel="orders">
+          <div class="account-panel-head">
+            <div><p class="account-kicker">ACTIVIDAD</p><h2>Mis pedidos</h2></div>
+            <a href="shop-all.html">Seguir comprando</a>
+          </div>
+          <div id="account-orders"></div>
+          <div class="account-guest-note">
+            <strong>¿Compraste antes de crear tu cuenta?</strong>
+            <p>Por seguridad, aquí solo aparecen los pedidos realizados mientras tenías tu sesión iniciada. Los pedidos anteriores todavía puedes consultarlos con número de pedido y correo.</p>
+            <a href="order-lookup.html">Consultar un pedido anterior</a>
+          </div>
+        </section>
+
+        <section class="account-panel" data-account-panel="favorites">
+          <div class="account-panel-head">
+            <div><p class="account-kicker">GUARDADOS</p><h2>Mis favoritos</h2></div>
+            <a href="shop-all.html">Seguir comprando</a>
+          </div>
+          <div id="account-favorites" class="account-favorites-grid"></div>
+        </section>
+
+        <section class="account-panel" data-account-panel="profile">
+          <div class="account-panel-head">
+            <div><p class="account-kicker">PERFIL</p><h2>Mi cuenta</h2></div>
+          </div>
+          <form id="account-profile-form" class="account-form">
+            <div class="account-two">
+              <label>Nombre<input type="text" name="nombre" required></label>
+              <label>Apellidos<input type="text" name="apellidos"></label>
+            </div>
+            <label>Correo electrónico<input type="email" name="email" readonly></label>
+            <div class="account-email-status-row"><span id="account-email-status" class="account-verified-badge">Correo de la cuenta</span><button type="button" class="account-link-button" id="account-email-change-toggle">Cambiar correo</button></div>
+            <label>Teléfono<input type="tel" name="telefono" autocomplete="tel"></label>
+            <button type="submit">Guardar cambios</button>
+            <p class="account-message" id="account-profile-message"></p>
+          </form>
+
+          <section class="account-security-block">
+            <div class="account-section-head"><div><p class="account-kicker">SEGURIDAD</p><h3>Acceso a tu cuenta</h3></div></div>
+            <form id="account-email-change-form" class="account-form account-security-form" hidden>
+              <h4>Cambiar correo electrónico</h4>
+              <p class="account-security-help">Enviaremos un enlace al nuevo correo. El cambio no se aplicará hasta que lo confirmes.</p>
+              <label>Nuevo correo<input type="email" name="newEmail" autocomplete="email" required></label>
+              <label>Contraseña actual
+                <span class="account-password-input-wrap">
+                  <input type="password" name="password" autocomplete="current-password" required>
+                  <button type="button" class="account-password-toggle" data-account-password-toggle aria-label="Mostrar contraseña" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle><path class="account-password-eye-slash" d="M4 4 20 20"></path></svg>
+                  </button>
+                </span>
+              </label>
+              <div class="account-security-actions"><button type="submit">Enviar verificación</button><button type="button" class="account-secondary-button" id="account-email-change-cancel">Cancelar</button></div>
+              <p class="account-message" id="account-email-change-message"></p>
+            </form>
+
+            <form id="account-password-form" class="account-form account-security-form">
+              <h4>Cambiar contraseña</h4>
+              <label>Contraseña actual
+                <span class="account-password-input-wrap">
+                  <input type="password" name="currentPassword" autocomplete="current-password" required>
+                  <button type="button" class="account-password-toggle" data-account-password-toggle aria-label="Mostrar contraseña" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle><path class="account-password-eye-slash" d="M4 4 20 20"></path></svg>
+                  </button>
+                </span>
+              </label>
+              <div class="account-two">
+                <label>Nueva contraseña
+                  <span class="account-password-input-wrap">
+                    <input type="password" name="newPassword" minlength="8" maxlength="20" autocomplete="new-password" required>
+                    <button type="button" class="account-password-toggle" data-account-password-toggle aria-label="Mostrar contraseña" aria-pressed="false">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle><path class="account-password-eye-slash" d="M4 4 20 20"></path></svg>
+                    </button>
+                  </span>
+                </label>
+                <label>Confirmar nueva contraseña
+                  <span class="account-password-input-wrap">
+                    <input type="password" name="confirmPassword" minlength="8" maxlength="20" autocomplete="new-password" required>
+                    <button type="button" class="account-password-toggle" data-account-password-toggle aria-label="Mostrar contraseña" aria-pressed="false">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle><path class="account-password-eye-slash" d="M4 4 20 20"></path></svg>
+                    </button>
+                  </span>
+                </label>
+              </div>
+              <small>Debe tener de 8 a 20 caracteres, combinar mayúsculas y minúsculas e incluir un número o símbolo.</small>
+              <button type="submit">Cambiar contraseña</button>
+              <p class="account-message" id="account-password-message"></p>
+            </form>
+          </section>
+        </section>
+
+        <section class="account-panel" data-account-panel="address">
+          <div class="account-panel-head">
+            <div><p class="account-kicker">DIRECCIONES</p><h2>Mis direcciones</h2></div>
+          </div>
+          <form id="account-address-form" class="account-form">
+            <label>Calle y número<input type="text" name="calle" autocomplete="street-address"></label>
+            <div class="account-two">
+              <label>Colonia<input type="text" name="colonia"></label>
+              <label>Código postal<input type="text" name="cp" autocomplete="postal-code"></label>
+            </div>
+            <div class="account-three">
+              <label>Ciudad<input type="text" name="ciudad" autocomplete="address-level2"></label>
+              <label>Estado<input type="text" name="estado" autocomplete="address-level1"></label>
+              <label>País<input type="text" name="pais" value="México"></label>
+            </div>
+            <button type="submit">Guardar dirección</button>
+            <p class="account-message" id="account-address-message"></p>
+          </form>
+          <p class="account-address-note">Por ahora la dirección de facturación se muestra igual que la dirección de envío.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div data-shell-benefits></div>
+  <div data-shell-footer></div>
+  <script src="app.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

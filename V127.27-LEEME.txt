@@ -1,0 +1,19 @@
+Niños Rancios — V127.27 Modo mantenimiento
+
+Cambios:
+- Nueva página de mantenimiento para ocultar la tienda al público mientras se realizan cambios.
+- Nuevo apartado Administración > Mantenimiento.
+- El modo mantenimiento se puede activar o desactivar sin reiniciar el servidor.
+- Se puede editar el título y el mensaje mostrado a los visitantes.
+- La configuración queda guardada en server/data/maintenance-mode.json.
+- Cuando está activo, las páginas públicas responden con una pantalla de mantenimiento y código HTTP 503.
+- La sesión de administrador puede seguir viendo la tienda completa para revisar los cambios.
+- El panel privado sigue siendo accesible durante el mantenimiento.
+- Se mantienen accesibles los retornos críticos de pago y enlaces de seguridad (payment-success, verify-email y reset-password).
+- Incluye una Vista previa de la página de mantenimiento desde el panel.
+
+Estado inicial:
+- Modo mantenimiento DESACTIVADO, para evitar ocultar la tienda accidentalmente al iniciar esta versión por primera vez.
+
+Base:
+- V127.26 Hero video sin flash.

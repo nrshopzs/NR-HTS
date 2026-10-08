@@ -1,0 +1,12 @@
+V73 - CUENTA SIN ENCABEZADO SUPERIOR
+
+Cambios:
+- Se eliminó del perfil el bloque:
+  ÁREA DE CLIENTE
+  MI CUENTA
+  Consulta tu actividad, tus pedidos y tus datos personales.
+
+Resultado:
+- Al entrar a Perfil, el usuario va directo al entorno de cuenta.
+- Se mantiene el menú lateral:
+  Resumen / Mis pedidos / Mi cuenta / Mis direcciones / Cerrar sesión

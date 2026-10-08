@@ -1,0 +1,53 @@
+NIÑOS RANCIOS V127.47 — PERSISTENCIA REAL DEL PANEL EN POSTGRESQL
+
+Base: V127.46.
+
+PROBLEMA CORREGIDO
+- Los cambios hechos desde el Panel de administración se guardaban en archivos locales de la instancia de Wasmer.
+- Al reiniciarse, escalar o volver a desplegar la app, Wasmer podía crear una instancia nueva y reaparecían los valores originales del repositorio.
+
+SOLUCIÓN V127.47
+- Se agregó un espejo persistente en PostgreSQL para la configuración y los recursos administrables que todavía usan archivos.
+- Al iniciar una instancia, la app restaura primero esos archivos desde PostgreSQL y después empieza a recibir tráfico.
+- Después de una modificación exitosa en /api/admin, la app sincroniza automáticamente los cambios a PostgreSQL.
+- Cada instancia consulta periódicamente si hay una versión más reciente para mantener el panel sincronizado entre instancias.
+
+SE CONSERVAN EN POSTGRESQL
+- Portada: textos, posiciones, tamaños, colores, slider, banda promocional y bloques visuales.
+- Pie de página: teléfono, Facebook e Instagram.
+- Catálogo administrable y productos.
+- Promociones.
+- Entrega local.
+- Transferencia bancaria.
+- Plantillas de correo y logo subido.
+- Guía de tallas.
+- Modo mantenimiento y sus recursos.
+- Configuración de colaboraciones.
+- Imágenes subidas de productos, portada y beneficios.
+- Videos subidos de portada/mantenimiento.
+- Comprobantes de transferencia.
+- Historiales locales de correo y tokens temporales de acciones de cliente.
+
+ARCHIVOS GRANDES
+- Los recursos mayores de 8 MB se guardan por bloques de 4 MB en PostgreSQL para evitar cargar un video completo en memoria durante la sincronización/restauración.
+
+TABLAS NUEVAS
+- nr_admin_files
+- nr_admin_file_chunks
+
+VERIFICACIÓN
+- Después de guardar algo en Administración, en Logs debe aparecer:
+  Persistencia del panel OK: ... guardados ...
+- Tras un redeploy, al arrancar debe aparecer:
+  Persistencia del panel: PostgreSQL (restaurados ..., inicializados ...)
+- También existe el endpoint privado GET /api/admin/persistence para consultar cantidad de archivos y bytes persistidos.
+
+IMPORTANTE EN LA PRIMERA INSTALACIÓN
+- La primera vez que V127.47 arranca, si nr_admin_files está vacía, se guardan como base los archivos incluidos en ESTE paquete.
+- Una personalización que exista solamente dentro de una instancia anterior de Wasmer no puede recuperarse automáticamente después de que esa instancia desaparece.
+- Por eso, si la personalización actual todavía está visible antes de desplegar V127.47, conviene respaldar /api/homepage o conservar los valores para re-aplicarlos una sola vez. A partir de V127.47, los nuevos cambios quedarán persistentes.
+
+NO CAMBIAR EN WASMER
+- DATA_BACKEND=postgres
+- DATABASE_SSL=no-verify
+- Mantener activada la base PostgreSQL existente.

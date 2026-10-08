@@ -1,0 +1,13 @@
+V81 - CORRECCIÓN DE FUENTES Y COLOR EN EL EDITOR DE PORTADA
+
+Se corrigió un error en el HTML generado para fuentes con nombres compuestos.
+Antes, las comillas dobles de fuentes como Helvetica Neue, Arial Black,
+Times New Roman, Trebuchet MS y Courier New rompían el atributo style,
+por lo que podían dejar de aplicarse fuente, tamaño, peso, color y fondo.
+
+Ahora esas familias usan comillas simples dentro del CSS y funcionan
+correctamente tanto en la vista previa del panel como en la portada publicada.
+
+Nota: Helvetica Neue no viene instalada de fábrica en muchas computadoras
+Windows. Si el equipo no la tiene, el navegador usará Helvetica o Arial como
+respaldo; esto es comportamiento normal del navegador.

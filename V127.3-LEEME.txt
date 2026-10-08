@@ -1,0 +1,24 @@
+NIÑOS RANCIOS — V127.3 · Favoritos / Lista de deseos
+
+Base: V127.2.
+
+Cambios principales:
+- El botón de corazón de la página de producto ahora funciona como Favoritos.
+- Corazón vacío = producto no guardado; corazón lleno = producto guardado.
+- Un segundo clic quita el producto de Favoritos.
+- Si el visitante no ha iniciado sesión, se abre el login y se explica que debe iniciar sesión para guardar el producto.
+- Si inicia sesión desde ese flujo, el producto se guarda automáticamente y regresa a la página del producto.
+- Los favoritos se guardan en la cuenta del cliente en server/data/customers.json, por lo que persisten entre sesiones y dispositivos.
+- Mi cuenta incorpora la sección “Mis favoritos”, con imagen, nombre, precio, estado de stock, botón Ver producto y opción Quitar.
+- El menú desplegable de la cuenta incorpora acceso directo a “Mis Favoritos”.
+- Las cuentas existentes son compatibles: si no tienen favoritos guardados se muestran con una lista vacía.
+- Se conserva íntegramente la guía de tallas V127.2 y el resto de pagos, correos, pedidos y funciones anteriores.
+
+Prueba recomendada:
+1. Copia el .env y server/data de tu V127.2 actual a esta versión.
+2. Copia también las carpetas de uploads que estés usando (email, portada, beneficios o productos).
+3. Ejecuta npm install y npm start desde server.
+4. Sin iniciar sesión, pulsa el corazón en un producto: debe abrir el login.
+5. Inicia sesión: debe regresar al producto con el corazón lleno.
+6. En Mi cuenta > Mis favoritos, confirma que aparezca el producto.
+7. Quita el producto desde Mi cuenta y comprueba que el corazón vuelva a quedar vacío al abrirlo.

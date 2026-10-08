@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <title>Acceso privado | Niños Rancios</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#242424}
+    body{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;padding:72px 28px}
+    .close-link{position:fixed;top:42px;right:64px;width:34px;height:34px;display:block;text-decoration:none;color:#242424;z-index:2}
+    .close-link::before,.close-link::after{content:"";position:absolute;left:16px;top:2px;width:1px;height:30px;background:#242424}
+    .close-link::before{transform:rotate(45deg)}
+    .close-link::after{transform:rotate(-45deg)}
+    .close-link:focus-visible{outline:2px solid #efb93d;outline-offset:5px}
+    .lock{width:min(470px,100%);margin-top:-10px}
+    h1{margin:0 0 13px;font-size:46px;line-height:1.1;font-weight:300;letter-spacing:.2px;color:#282828;white-space:nowrap}
+    .intro{margin:0 0 46px;font-size:14px;line-height:1.65;color:#333}
+    .field{position:relative;margin-bottom:44px}
+    input{width:100%;height:42px;border:0;border-bottom:1px solid #efb93d;background:transparent;padding:0 52px 4px 0;font:inherit;font-size:14px;color:#222;outline:none;border-radius:0}
+    input::placeholder{color:#777;opacity:1}
+    input:focus{border-bottom-color:#d99f10;box-shadow:0 1px 0 #d99f10}
+    .toggle{position:absolute;right:0;top:0;width:42px;height:40px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:#666;padding:0}
+    .toggle:hover{color:#222}
+    .toggle:focus-visible{outline:2px solid #242424;outline-offset:3px}
+    .toggle svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+    .toggle-eye-slash{opacity:0;transition:opacity .15s ease}
+    .toggle.is-visible .toggle-eye-slash{opacity:1}
+    .submit{width:100%;height:44px;border:0;background:#ffc21c;color:#fff;font:inherit;font-size:13px;cursor:pointer;transition:filter .15s ease,opacity .15s ease}
+    .submit:hover{filter:brightness(.97)}
+    .submit:focus-visible{outline:2px solid #242424;outline-offset:3px}
+    .submit:disabled{opacity:.55;cursor:wait;filter:none}
+    .message{min-height:19px;margin:13px 0 0;font-size:12px;line-height:1.5;color:#b32929}
+    @media(max-width:700px){
+      body{align-items:flex-start;padding:150px 34px 60px}
+      .close-link{top:28px;right:26px}
+      .lock{width:100%;max-width:470px;margin:0 auto}
+      h1{font-size:clamp(28px,8vw,38px);white-space:nowrap}
+      .intro{font-size:13px;margin-bottom:40px}
+    }
+  </style>
+</head>
+<body>
+  <a class="close-link" href="index.html" aria-label="Volver al inicio" title="Volver al inicio"></a>
+  <main class="lock">
+    <h1>ACCESO PRIVADO</h1>
+    <p class="intro">Esta sección se encuentra en preparación. Ingresa la contraseña para continuar.</p>
+    <form id="lock-form" autocomplete="off">
+      <div class="field">
+        <input id="lock-password" name="password" type="password" required autocomplete="current-password" placeholder="Contraseña" autofocus aria-label="Contraseña">
+        <button class="toggle" id="toggle-password" type="button" aria-label="Mostrar contraseña" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.8"></circle><path class="toggle-eye-slash" d="M4 4 20 20"></path></svg>
+        </button>
+      </div>
+      <button class="submit" id="submit-button" type="submit">Entrar</button>
+      <p class="message" id="message" role="alert" aria-live="polite"></p>
+    </form>
+  </main>
+  <script>
+    const form=document.getElementById('lock-form');
+    const input=document.getElementById('lock-password');
+    const button=document.getElementById('submit-button');
+    const message=document.getElementById('message');
+    const toggle=document.getElementById('toggle-password');
+    toggle.addEventListener('click',()=>{const visible=input.type==='text';input.type=visible?'password':'text';toggle.classList.toggle('is-visible',!visible);toggle.setAttribute('aria-pressed',!visible?'true':'false');toggle.setAttribute('aria-label',visible?'Mostrar contraseña':'Ocultar contraseña')});
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      message.textContent='';button.disabled=true;
+      try{
+        const res=await fetch('/api/collaborations/unlock',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:input.value})});
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok)throw new Error(data.error||'No fue posible validar la contraseña.');
+        location.replace('partners.html');
+      }catch(err){message.textContent=err.message||'Contraseña incorrecta.';input.select()}
+      finally{button.disabled=false}
+    });
+  </script>
+</body>
+</html>

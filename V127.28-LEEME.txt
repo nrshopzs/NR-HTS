@@ -1,0 +1,16 @@
+Niños Rancios — V127.28 · Mantenimiento personalizable
+
+Base: V127.27.
+
+Novedades del panel Administración > Mantenimiento:
+- Activar/desactivar mantenimiento sin tocar código.
+- Fondo configurable: color sólido, imagen o video.
+- Subida de imagen JPG/PNG/WEBP y video MP4/WEBM.
+- Posición X/Y del fondo y capa de color con opacidad.
+- Logotipo personalizable: mostrar/ocultar, subir SVG/PNG/JPG/WEBP, ancho escritorio/móvil y posición X/Y.
+- Icono decorativo opcional con subida, tamaño y posición.
+- Editor individual para texto superior, título, mensaje y texto inferior.
+- Cada texto permite editar: contenido, mostrar/ocultar, posición X/Y, ancho máximo, fuente, tamaño escritorio/móvil, peso, cursiva, color, fondo, padding, interletrado, interlineado, alineación y mayúsculas.
+- Vista previa integrada en el panel y enlace para abrirla en grande.
+
+La página sigue respondiendo HTTP 503 cuando el modo mantenimiento está activo y continúa usando noindex/noarchive.

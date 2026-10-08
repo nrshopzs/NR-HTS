@@ -1,0 +1,14 @@
+V109
+
+Cambios realizados en la cinta de texto:
+- Ahora el color de fondo es editable desde Administración > Portada.
+- Ahora el color del texto es editable desde Administración > Portada.
+- Ahora puedes activar o desactivar la cinta por páginas específicas mediante checkboxes.
+- Se deja fuera del selector: carrito, checkout, pedido pagado y búsqueda de pedidos.
+
+Archivos actualizados:
+- app.js
+- styles.css
+- admin.js
+- admin.css
+- server/homepage.js

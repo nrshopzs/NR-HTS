@@ -1,0 +1,7 @@
+V64 - ZOOM CON CLIC
+
+- Al pasar el mouse sobre la foto, el zoom sigue activándose.
+- Cuando aparece el cursor con lupa y signo "-", hacer clic vuelve la imagen a tamaño normal.
+- Mientras el cursor siga dentro de la imagen, el zoom queda pausado.
+- Al sacar el mouse y volver a entrar, el zoom vuelve a activarse.
+- También puedes hacer clic de nuevo para volver a activar el zoom sin sacar el cursor.

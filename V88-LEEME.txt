@@ -1,0 +1,14 @@
+V88 - IMAGEN DE FONDO DE PORTADA RESTAURADA
+
+Corrección:
+- La tienda ya no construye la imagen de cada diapositiva mediante un
+  background-image generado dentro del HTML.
+- Cada diapositiva usa ahora un elemento <img> real con object-fit: cover.
+- Las rutas de imágenes subidas desde el panel se resuelven correctamente.
+- Se conserva la posición X/Y configurada para la imagen.
+- La capa de oscurecimiento sigue funcionando de forma independiente.
+- Las transiciones laterales/fundido de V87 siguen aplicándose a imagen y textos.
+- La vista previa del panel usa el mismo método que la portada pública.
+
+No se modifican tus diapositivas, textos, imágenes guardadas ni controles del slider.
+Conserva tu carpeta server/data y assets/portada/uploads al actualizar.
