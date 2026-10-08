@@ -12,3 +12,4 @@ Nuevo comportamiento:
 
 No se modificaron las funciones del carrito, checkout, productos, promociones,
 cuentas, pedidos ni el panel de administración.
+Redeploy test 2026-10-07
