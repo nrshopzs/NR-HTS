@@ -1,0 +1,32 @@
+NIÑOS RANCIOS — V127.49 FUSIÓN SEGURA
+
+Objetivo
+- Mantener íntegra la personalización visual ya guardada por V127.47.
+- Añadir el editor de textos de V127.48.
+- Conservar configuraciones, imágenes y videos administrativos en PostgreSQL entre reinicios y redeploys.
+
+IMPORTANTE
+Esta actualización debe desplegarse SOBRE LA MISMA APP DE WASMER y usando LA MISMA BASE DE DATOS PostgreSQL.
+No borres la app, no borres la base de datos y no rotes credenciales durante la actualización.
+
+Cómo protege tu diseño actual
+1. Al arrancar, restaura primero desde PostgreSQL todos los archivos administrativos ya existentes.
+2. No reemplaza homepage.json, productos, promociones, footer ni recursos que ya estén guardados en PostgreSQL.
+3. Solo inicializa archivos NUEVOS que aún no existan en PostgreSQL; en esta versión, site-texts.json.
+4. El editor de textos modifica únicamente contenido textual visible; no cambia clases, posiciones, tamaños, colores, imágenes ni estructura del diseño.
+
+Nueva función
+Administración > Textos del sitio
+- Textos globales.
+- Textos por página.
+- Búsqueda de textos.
+- Restablecimiento individual o por ámbito.
+- Alta manual para textos dinámicos.
+- Persistencia PostgreSQL a través de server/data/site-texts.json.
+
+Variables que deben conservarse
+DATA_BACKEND=postgres
+DATABASE_SSL=no-verify
+NODE_ENV=production
+
+No necesitas volver a personalizar la portada después de instalar esta versión si continúas usando la misma app/base de datos.

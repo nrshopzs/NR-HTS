@@ -1,7 +1,7 @@
 {
-  "name": "ninos-rancios-v127-47-wasmer",
+  "name": "ninos-rancios-server-v127-49-fusion-segura",
   "private": true,
-  "version": "1.12.0",
+  "version": "1.14.0",
   "scripts": {
     "start": "node server.js",
     "security:check": "node security-smoke-test.js",
@@ -19,5 +19,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "description": "Niños Rancios V127.49 - conserva personalización V127.47 + textos editables persistentes en PostgreSQL"
 }

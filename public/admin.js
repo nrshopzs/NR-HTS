@@ -1,4 +1,4 @@
-const adminState={orders:[],statuses:[],inventory:null,products:[],homepage:null,homepageSlide:0,homepagePreviewMode:'desktop',localDelivery:null,bankTransfer:null,promotions:[],promotionProducts:[],editingPromotionId:'',sizeGuide:null,emailTemplates:null,emailTemplateDefaults:null,emailTemplateKey:'order_paid',emailMode:'templates',emailHistory:[],composeOrderNumber:'',collaborations:null,maintenance:null};
+const adminState={orders:[],statuses:[],inventory:null,products:[],homepage:null,homepageSlide:0,homepagePreviewMode:'desktop',localDelivery:null,bankTransfer:null,promotions:[],promotionProducts:[],editingPromotionId:'',sizeGuide:null,emailTemplates:null,emailTemplateDefaults:null,emailTemplateKey:'order_paid',emailMode:'templates',emailHistory:[],composeOrderNumber:'',collaborations:null,maintenance:null,siteTexts:null,siteTextCatalog:null,siteTextScope:'global',siteTextSearch:''};
 const HOMEPAGE_RIBBON_PAGES=[{file:'index.html',label:'Inicio'},{file:'shop-all.html',label:'Tienda / Shop All'},{file:'woman.html',label:'Mujer'},{file:'men.html',label:'Hombre'},{file:'product.html',label:'Detalle de producto'},{file:'about-us.html',label:'Nosotros'},{file:'contact.html',label:'Contacto'},{file:'privacy.html',label:'Aviso de privacidad'},{file:'returns.html',label:'Cambios y devoluciones'},{file:'shipping.html',label:'Envíos'},{file:'stockists.html',label:'Puntos de venta'},{file:'partners.html',label:'Colaboraciones'},{file:'jobs.html',label:'Empleos'},{file:'offers.html',label:'Promociones'},{file:'account.html',label:'Mi cuenta'}];
 const MAINTENANCE_FONTS=['Montserrat','Helvetica Neue','Arial','Arial Black','Impact','Georgia','Times New Roman','Trebuchet MS','Courier New'];
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -13,7 +13,7 @@ async function boot(){clock();setInterval(clock,30000);try{const s=await api('/a
 $('#admin-login-form')?.addEventListener('submit',async e=>{e.preventDefault();const msg=$('#login-message');msg.textContent='Entrando…';try{await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:$('#admin-password').value})});$('#admin-password').value='';showApp();await openView('dashboard')}catch(err){msg.textContent=err.message}});
 $('#admin-logout')?.addEventListener('click',async()=>{try{await api('/api/admin/logout',{method:'POST',body:'{}'})}catch{}showLogin('Sesión cerrada.')});
 $$('.admin-nav').forEach(btn=>btn.addEventListener('click',()=>openView(btn.dataset.view)));
-async function openView(view){$$('.admin-nav').forEach(b=>b.classList.toggle('active',b.dataset.view===view));$$('.admin-view').forEach(v=>v.hidden=v.id!==`view-${view}`);$('#view-title').textContent={dashboard:'Resumen',orders:'Pedidos',inventory:'Inventario',products:'Productos',homepage:'Portada',maintenance:'Mantenimiento',collaborations:'Colaboraciones',localdelivery:'Entrega local',banktransfer:'Transferencia bancaria',promotions:'Cupones y promociones',sizeguide:'Guía de tallas',emails:'Correos'}[view]||view;if(view==='dashboard')await loadDashboard();if(view==='orders')await loadOrders();if(view==='inventory')await loadInventory();if(view==='products')await loadProducts();if(view==='homepage')await loadHomepage();if(view==='maintenance')await loadMaintenanceAdmin();if(view==='collaborations')await loadCollaborationsAdmin();if(view==='localdelivery')await loadLocalDeliveryAdmin();if(view==='banktransfer')await loadBankTransferAdmin();if(view==='promotions')await loadPromotionsAdmin();if(view==='sizeguide')await loadSizeGuideAdmin();if(view==='emails')await loadEmailTemplatesAdmin()}
+async function openView(view){$$('.admin-nav').forEach(b=>b.classList.toggle('active',b.dataset.view===view));$$('.admin-view').forEach(v=>v.hidden=v.id!==`view-${view}`);$('#view-title').textContent={dashboard:'Resumen',orders:'Pedidos',inventory:'Inventario',products:'Productos',homepage:'Portada',texts:'Textos del sitio',maintenance:'Mantenimiento',collaborations:'Colaboraciones',localdelivery:'Entrega local',banktransfer:'Transferencia bancaria',promotions:'Cupones y promociones',sizeguide:'Guía de tallas',emails:'Correos'}[view]||view;if(view==='dashboard')await loadDashboard();if(view==='orders')await loadOrders();if(view==='inventory')await loadInventory();if(view==='products')await loadProducts();if(view==='homepage')await loadHomepage();if(view==='texts')await loadSiteTextsAdmin();if(view==='maintenance')await loadMaintenanceAdmin();if(view==='collaborations')await loadCollaborationsAdmin();if(view==='localdelivery')await loadLocalDeliveryAdmin();if(view==='banktransfer')await loadBankTransferAdmin();if(view==='promotions')await loadPromotionsAdmin();if(view==='sizeguide')await loadSizeGuideAdmin();if(view==='emails')await loadEmailTemplatesAdmin()}
 async function loadDashboard(){const root=$('#view-dashboard');root.innerHTML='<div class="empty-state">Cargando…</div>';try{const {summary:s}=await api('/api/admin/dashboard');root.innerHTML=`<div class="metric-grid"><article class="metric"><span>Pedidos</span><strong>${s.orders}</strong></article><article class="metric"><span>Ventas pagadas</span><strong>${money(s.revenue)}</strong></article><article class="metric"><span>Unidades en inventario</span><strong>${s.totalUnits}</strong></article><article class="metric"><span>Variantes agotadas</span><strong>${s.outOfStock}</strong></article></div><div class="panel"><div class="panel-head"><h2>Operación</h2><p>Estado actual de la tienda</p></div><div class="metric-grid" style="padding:20px"><article class="metric"><span>Pagados</span><strong>${s.paidOrders}</strong></article><article class="metric"><span>Preparando</span><strong>${s.preparing}</strong></article><article class="metric"><span>Enviados</span><strong>${s.shipped}</strong></article><article class="metric"><span>Stock bajo (1–2)</span><strong>${s.lowStock}</strong></article></div></div>`}catch(e){root.innerHTML=`<div class="empty-state">${esc(e.message)}</div>`}}
 async function loadOrders(){const root=$('#view-orders');root.innerHTML='<div class="empty-state">Cargando pedidos…</div>';try{const data=await api('/api/admin/orders');adminState.orders=data.orders;adminState.statuses=data.statuses;renderOrders()}catch(e){root.innerHTML=`<div class="empty-state">${esc(e.message)}</div>`}}
 function renderOrders(){
@@ -1258,6 +1258,87 @@ $$('.rich-editor').forEach(editor=>editor.addEventListener('paste',e=>{
   const text=(e.clipboardData||window.clipboardData).getData('text/plain');
   document.execCommand('insertText',false,text);
 }));
+
+
+function normalizeSiteTextKey(value){return String(value??'').replace(/\s+/g,' ').trim()}
+function currentSiteTextMap(){
+  const cfg=adminState.siteTexts||(adminState.siteTexts={version:1,global:{},pages:{}});
+  if(adminState.siteTextScope==='global')return cfg.global||(cfg.global={});
+  cfg.pages=cfg.pages||{};
+  return cfg.pages[adminState.siteTextScope]||(cfg.pages[adminState.siteTextScope]={});
+}
+function siteTextCatalogForScope(){
+  const cat=adminState.siteTextCatalog||{common:[],pages:{}};
+  const base=adminState.siteTextScope==='global'
+    ? [...(cat.common||[]),...Object.values(cat.pages||{}).flat()]
+    : [...(cat.common||[]),...(cat.pages?.[adminState.siteTextScope]||[])];
+  const map=currentSiteTextMap();
+  const all=[...new Set([...base,...Object.keys(map)].map(normalizeSiteTextKey).filter(Boolean))];
+  const q=normalizeSiteTextKey(adminState.siteTextSearch).toLocaleLowerCase('es-MX');
+  return all.filter(t=>!q||t.toLocaleLowerCase('es-MX').includes(q)||(String(map[t]||'').toLocaleLowerCase('es-MX').includes(q)))
+    .sort((a,b)=>a.localeCompare(b,'es'));
+}
+function syncSiteTextControls(){
+  const map=currentSiteTextMap();
+  $$('[data-site-text-source]').forEach(input=>{
+    const source=input.dataset.siteTextSource||'';
+    const value=input.value;
+    if(value==='')delete map[source]; else map[source]=value;
+  });
+}
+async function loadSiteTextsAdmin(){
+  const root=$('#view-texts');root.innerHTML='<div class="empty-state">Cargando textos del sitio…</div>';
+  try{
+    const data=await api('/api/admin/site-texts');
+    adminState.siteTexts=data.settings||{version:1,global:{},pages:{}};
+    adminState.siteTextCatalog=data.catalog||{common:[],pages:{},labels:{}};
+    if(adminState.siteTextScope!=='global'&&!adminState.siteTextCatalog.pages?.[adminState.siteTextScope])adminState.siteTextScope='global';
+    renderSiteTextsAdmin();
+  }catch(e){root.innerHTML=`<div class="empty-state">${esc(e.message)}</div>`}
+}
+function renderSiteTextsAdmin(){
+  const root=$('#view-texts');if(!root)return;
+  const cat=adminState.siteTextCatalog||{common:[],pages:{},labels:{}};
+  const cfg=adminState.siteTexts||{version:1,global:{},pages:{}};
+  const map=currentSiteTextMap();
+  const rows=siteTextCatalogForScope();
+  const pageOptions=Object.keys(cat.pages||{}).sort((a,b)=>(cat.labels?.[a]||a).localeCompare(cat.labels?.[b]||b,'es'))
+    .map(name=>`<option value="${esc(name)}" ${adminState.siteTextScope===name?'selected':''}>${esc(cat.labels?.[name]||name)}</option>`).join('');
+  root.innerHTML=`
+    <div class="site-text-toolbar panel">
+      <div class="panel-head"><div><h2>Editor de textos</h2><p>Cambia los textos visibles de la tienda sin tocar código. Los cambios se guardan en PostgreSQL y sobreviven a los redeploys.</p></div><button type="button" class="primary-admin-action" id="site-text-save">Guardar textos</button></div>
+      <div class="site-text-controls">
+        <label>Editar en<select id="site-text-scope"><option value="global" ${adminState.siteTextScope==='global'?'selected':''}>Todo el sitio (global)</option>${pageOptions}</select></label>
+        <label>Buscar texto<input id="site-text-search" type="search" value="${esc(adminState.siteTextSearch)}" placeholder="Ej. Envíos, Nosotros, Comprar…"></label>
+        <button type="button" class="secondary-home-action" id="site-text-reset-scope">Restablecer este ámbito</button>
+      </div>
+      <div class="admin-note">Global modifica el mismo texto en todas las páginas. Si eliges una página, ese cambio tiene prioridad solo allí. Los nombres, precios y descripciones de productos continúan editándose desde <strong>Productos</strong>.</div>
+    </div>
+    <div class="panel site-text-panel">
+      <div class="panel-head"><h2>${adminState.siteTextScope==='global'?'Textos globales':esc(cat.labels?.[adminState.siteTextScope]||adminState.siteTextScope)}</h2><p>${rows.length} texto(s) encontrados · ${Object.keys(map).length} personalizado(s)</p></div>
+      <div class="site-text-list">${rows.length?rows.map(source=>{
+        const own=Object.prototype.hasOwnProperty.call(map,source)?map[source]:'';
+        const inherited=adminState.siteTextScope!=='global'&&Object.prototype.hasOwnProperty.call(cfg.global||{},source)?cfg.global[source]:'';
+        const hint=inherited?`Global: ${inherited}`:`Original: ${source}`;
+        return `<div class="site-text-row"><div class="site-text-original"><span>Texto original</span><strong>${esc(source)}</strong></div><label>Texto personalizado<textarea rows="2" data-site-text-source="${esc(source)}" placeholder="${esc(hint)}">${esc(own)}</textarea></label><button type="button" class="site-text-clear" data-site-text-clear="${esc(source)}">Restablecer</button></div>`;
+      }).join(''):'<div class="empty-state">No encontramos textos con ese filtro.</div>'}</div>
+    </div>
+    <div class="panel site-text-manual"><div class="panel-head"><h2>Agregar texto manualmente</h2><p>Úsalo si un texto dinámico no aparece en la lista.</p></div><div class="site-text-manual-grid"><label>Texto actual<input id="site-text-manual-source" type="text" placeholder="Texto exactamente como aparece"></label><label>Nuevo texto<input id="site-text-manual-value" type="text" placeholder="Texto que quieres mostrar"></label><button type="button" class="secondary-home-action" id="site-text-manual-add">Agregar</button></div></div>
+    <p id="site-text-message" class="message"></p>`;
+
+  $('#site-text-scope')?.addEventListener('change',e=>{syncSiteTextControls();adminState.siteTextScope=e.target.value;adminState.siteTextSearch='';renderSiteTextsAdmin()});
+  $('#site-text-search')?.addEventListener('input',e=>{syncSiteTextControls();adminState.siteTextSearch=e.target.value;renderSiteTextsAdmin();const i=$('#site-text-search');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}});
+  $$('[data-site-text-clear]').forEach(btn=>btn.addEventListener('click',()=>{syncSiteTextControls();delete currentSiteTextMap()[btn.dataset.siteTextClear];renderSiteTextsAdmin()}));
+  $('#site-text-reset-scope')?.addEventListener('click',()=>{if(!confirm('¿Restablecer todos los textos personalizados de este ámbito?'))return;if(adminState.siteTextScope==='global')adminState.siteTexts.global={};else delete adminState.siteTexts.pages[adminState.siteTextScope];renderSiteTextsAdmin()});
+  $('#site-text-manual-add')?.addEventListener('click',()=>{syncSiteTextControls();const source=normalizeSiteTextKey($('#site-text-manual-source')?.value),value=String($('#site-text-manual-value')?.value||'').trim();if(!source||!value)return alert('Escribe el texto actual y el nuevo texto.');currentSiteTextMap()[source]=value;adminState.siteTextSearch=source;renderSiteTextsAdmin()});
+  $('#site-text-save')?.addEventListener('click',saveSiteTextsAdmin);
+}
+async function saveSiteTextsAdmin(){
+  syncSiteTextControls();const btn=$('#site-text-save'),msg=$('#site-text-message');if(btn)btn.disabled=true;if(msg)msg.textContent='Guardando textos…';
+  try{const data=await api('/api/admin/site-texts',{method:'PATCH',body:JSON.stringify(adminState.siteTexts)});adminState.siteTexts=data.settings;toast('Textos del sitio actualizados');renderSiteTextsAdmin();const m=$('#site-text-message');if(m)m.textContent='Textos guardados y publicados.'}
+  catch(e){if(msg)msg.textContent=e.message}
+  finally{const b=$('#site-text-save');if(b)b.disabled=false}
+}
 
 boot();
 

@@ -3,7 +3,7 @@ const path=require('path');
 const crypto=require('crypto');
 const db=require('./database');
 
-// V127.47 — espejo persistente de los archivos que todavía usa el panel.
+// V127.49 — espejo persistente de los archivos que todavía usa el panel.
 // PostgreSQL conserva configuraciones y recursos subidos entre reinicios,
 // cambios de instancia y redeploys de Wasmer. Los archivos grandes se guardan
 // por bloques para no cargarlos completos en memoria.
@@ -15,6 +15,7 @@ const REFRESH_INTERVAL_MS=5000;
 
 const CONFIG_FILES=[
   'server/data/homepage.json',
+  'server/data/site-texts.json',
   'server/data/products.json',
   'server/data/promotions.json',
   'server/data/local-delivery.json',

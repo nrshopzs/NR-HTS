@@ -1,0 +1,27 @@
+NIÑOS RANCIOS V127.48 — TEXTOS EDITABLES DESDE ADMINISTRACIÓN
+
+NOVEDAD PRINCIPAL
+- Nuevo módulo "Textos del sitio" dentro del panel de administración.
+- Permite editar textos globales (cabecera, pie y etiquetas comunes) o textos de una página específica.
+- Detecta automáticamente los textos estáticos de las páginas públicas.
+- Incluye búsqueda, restablecimiento por ámbito y alta manual para textos dinámicos que no aparezcan en la lista.
+- Los cambios se publican sin tocar HTML ni JavaScript.
+
+PERSISTENCIA
+- La configuración se guarda en server/data/site-texts.json.
+- V127.47+ refleja este archivo en PostgreSQL mediante nr_admin_files.
+- Por lo tanto los cambios sobreviven reinicios, cambio de instancia y redeploys de Wasmer.
+
+CÓMO USARLO
+1. Entra al panel privado.
+2. Abre "Textos del sitio".
+3. Selecciona "Todo el sitio (global)" para textos repetidos en varias páginas, o elige una página concreta.
+4. Busca el texto que quieras cambiar.
+5. Escribe el texto nuevo y pulsa "Guardar textos".
+6. Recarga la tienda.
+
+NOTAS
+- Si el mismo texto aparece varias veces dentro de un mismo ámbito, se cambia en todas esas apariciones.
+- Los nombres, precios y descripciones de productos siguen administrándose desde "Productos".
+- Los textos propios de la portada (hero, franja de beneficios, cinta promocional, etc.) siguen teniendo sus controles visuales en "Portada"; también pueden coincidir con el editor de textos, pero se recomienda usar el control específico cuando exista.
+- Si un texto dinámico no aparece en la lista, usa "Agregar texto manualmente" y escribe exactamente el texto actual y su reemplazo.

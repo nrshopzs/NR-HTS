@@ -10,6 +10,7 @@ const {calculateOrder,getProducts,getProductMap,createProduct,updateProduct,upda
 const {createCustomer,authenticateCustomer,getCustomerById,getCustomerByEmail,verifyCustomerPassword,updateCustomerProfile,updateCustomerAddress,markCustomerEmailVerified,setCustomerPassword,changeCustomerPassword,changeCustomerEmail,emailAvailable,getCustomerFavorites,addCustomerFavorite,removeCustomerFavorite,createCustomerSession,getCustomerFromSession,destroyCustomerSession,destroyCustomerSessionsByCustomerId,issueCustomerActionToken,getCustomerActionToken,consumeCustomerActionToken,revokeCustomerActionTokens}=require('./customers');
 const {sanitizeCheckout,normalizeItems,inventoryFor,saveDraft,getDraft,calculateCheckoutTotals,createLocalCashOrder,createBankTransferOrder,saveBankTransferProof,getBankTransferProofMeta,markBankTransferPaid,finalizeStripeOrder,finalizePayPalOrder,findOrderByPayPalOrderId,finalizeMercadoPagoOrder,findOrderByMercadoPagoOrderId,finalizeMercadoPagoPayment,findOrderByMercadoPagoPaymentId,getInventory,findOrder,listOrders,listCustomerOrders,updateOrderStatus,updateOrderShipment,setInventoryStock,reconcileInventoryForProduct,initializeInventoryForProduct,inventorySummary,adminSummary,ADMIN_ORDER_STATUSES}=require('./orders');
 const {getHomepage,saveHomepage}=require('./homepage');
+const siteTexts=require('./site-texts');
 const {getLocalDeliverySettings,saveLocalDeliverySettings,isEligibleAddress,publicSettings}=require('./local-delivery');
 const {adminList:promotionList,createPromotion,updatePromotion,deletePromotion}=require('./promotions');
 const paypal=require('./paypal');
@@ -952,6 +953,11 @@ app.get('/api/admin/email/history',requireAdmin,(req,res)=>{
   try{res.json({messages:emailService.listManualEmails(60)})}
   catch(err){res.status(400).json({error:err.message||'No fue posible cargar el historial de correo.'})}
 });
+app.get('/api/admin/site-texts',requireAdmin,(req,res)=>res.json({settings:siteTexts.getSiteTexts(),catalog:siteTexts.buildCatalog()}));
+app.patch('/api/admin/site-texts',requireAdmin,(req,res)=>{
+  try{res.json({ok:true,settings:siteTexts.saveSiteTexts(req.body||{})})}
+  catch(err){res.status(400).json({error:err.message||'No fue posible guardar los textos del sitio.'})}
+});
 app.get('/api/admin/homepage',requireAdmin,(req,res)=>res.json({homepage:getHomepage()}));
 app.patch('/api/admin/homepage',requireAdmin,(req,res)=>{
   try{res.json({ok:true,homepage:saveHomepage(req.body||{})})}
@@ -1134,6 +1140,7 @@ app.get('/api/stripe/config',(req,res)=>res.json({
   keyMismatch:stripeKeyMismatch
 }));
 app.get('/api/homepage',(req,res)=>res.json({homepage:getHomepage()}));
+app.get('/api/site-texts',(req,res)=>res.json({settings:siteTexts.getSiteTexts()}));
 app.get('/api/size-guide',(req,res)=>res.json({guide:sizeGuide.get()}));
 app.get('/api/local-delivery',(req,res)=>res.json({settings:publicSettings()}));
 app.get('/api/bank-transfer',(req,res)=>res.json({settings:publicAvailability()}));

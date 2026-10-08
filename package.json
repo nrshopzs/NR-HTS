@@ -1,8 +1,8 @@
 {
-  "name": "ninos-rancios-v127-46-footer-admin-wasmer",
+  "name": "ninos-rancios-v127-49-fusion-segura-wasmer",
   "private": true,
-  "version": "1.12.0",
-  "description": "Niños Rancios V127.46 - footer editable desde administración + mantenimiento PostgreSQL Wasmer",
+  "version": "1.14.0",
+  "description": "Niños Rancios V127.49 - conserva personalización V127.47 + textos editables persistentes en PostgreSQL",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

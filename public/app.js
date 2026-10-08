@@ -1335,6 +1335,61 @@ function refreshInventoryViews(){
   if($('#woman-grid'))renderPaginatedGrid('#woman-grid',PRODUCTS.filter(p=>p.category==='woman'),'#woman-grid-pagination',15,true);
   renderCartPage();
 }
+
+let SITE_TEXT_OVERRIDES={version:1,global:{},pages:{}};
+let siteTextObserver=null;
+function normalizeSiteText(value){return String(value??'').replace(/\s+/g,' ').trim()}
+function siteTextPage(){const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].trim().toLowerCase();if(!file)return 'index.html';return file.includes('.')?file:`${file}.html`}
+function siteTextOverride(raw){
+  const key=normalizeSiteText(raw);if(!key)return null;
+  const pageMap=SITE_TEXT_OVERRIDES?.pages?.[siteTextPage()]||{};
+  if(Object.prototype.hasOwnProperty.call(pageMap,key))return String(pageMap[key]??'');
+  const globalMap=SITE_TEXT_OVERRIDES?.global||{};
+  if(Object.prototype.hasOwnProperty.call(globalMap,key))return String(globalMap[key]??'');
+  return null;
+}
+function replaceTextNode(node){
+  if(!node||node.nodeType!==Node.TEXT_NODE)return;
+  const parent=node.parentElement;if(!parent)return;
+  if(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA'].includes(parent.tagName))return;
+  if(parent.closest('[data-site-text-ignore]'))return;
+  const raw=node.nodeValue||'',key=normalizeSiteText(raw);if(!key)return;
+  const replacement=siteTextOverride(key);if(replacement===null)return;
+  const lead=(raw.match(/^\s*/)||[''])[0],trail=(raw.match(/\s*$/)||[''])[0];
+  const next=lead+replacement+trail;if(next!==raw)node.nodeValue=next;
+}
+function replaceTextAttributes(el){
+  if(!(el instanceof Element)||el.closest('[data-site-text-ignore]'))return;
+  for(const attr of ['placeholder','title','aria-label','alt']){
+    if(!el.hasAttribute(attr))continue;
+    const raw=el.getAttribute(attr)||'',replacement=siteTextOverride(raw);if(replacement!==null&&replacement!==raw)el.setAttribute(attr,replacement);
+  }
+  if(el.matches('input[type="button"],input[type="submit"],input[type="reset"]')){
+    const raw=el.value||'',replacement=siteTextOverride(raw);if(replacement!==null&&replacement!==raw)el.value=replacement;
+  }
+}
+function applySiteTextOverrides(root=document.documentElement){
+  if(!root)return;
+  if(root.nodeType===Node.TEXT_NODE){replaceTextNode(root);return}
+  if(root instanceof Element)replaceTextAttributes(root);
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let node;while((node=walker.nextNode()))replaceTextNode(node);
+  if(root.querySelectorAll)root.querySelectorAll('[placeholder],[title],[aria-label],[alt],input[type="button"],input[type="submit"],input[type="reset"]').forEach(replaceTextAttributes);
+}
+function startSiteTextObserver(){
+  if(siteTextObserver||!document.documentElement)return;
+  siteTextObserver=new MutationObserver(changes=>{
+    for(const change of changes){
+      if(change.type==='characterData')replaceTextNode(change.target);
+      for(const node of change.addedNodes||[])applySiteTextOverrides(node);
+    }
+  });
+  siteTextObserver.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+}
+async function loadSiteTextOverrides(){
+  try{const res=await fetch('/api/site-texts',{cache:'no-store'});if(res.ok){const data=await res.json();SITE_TEXT_OVERRIDES=data.settings||SITE_TEXT_OVERRIDES}}catch(e){}
+  startSiteTextObserver();applySiteTextOverrides(document.documentElement);
+}
+
 async function initPage(){
   await syncProductsFromServer();
   await loadLocalDeliveryConfig();
@@ -1346,5 +1401,6 @@ async function initPage(){
   await renderCheckoutPage();
   ensureDrawer();
   hydrateCustomerHeader();
+  await loadSiteTextOverrides();
 }
 document.addEventListener('DOMContentLoaded',initPage);
