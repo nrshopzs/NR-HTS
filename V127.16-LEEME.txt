@@ -1,8 +1,0 @@
-Niños Rancios — V127.16 icono de etiqueta en Checkout
-
-Cambios realizados:
-- Se sustituyó el icono anterior de “Ingresar un código promocional” dentro del resumen del Checkout por el SVG recortado “icono etiqueta - RECORTADO-01”.
-- No se modificó la lógica del código promocional.
-
-Base:
-- Esta versión parte de la V127.15.

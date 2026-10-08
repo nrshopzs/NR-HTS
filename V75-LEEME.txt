@@ -1,8 +1,0 @@
-V75 - BOTÓN X DEL LOGIN REGRESA AL INICIO
-
-Cambio solicitado:
-- Al pulsar la X de la ventana de inicio de sesión / registro,
-  el usuario es enviado a la página principal: index.html.
-
-El cierre interno del popup después de iniciar sesión o crear cuenta
-se mantiene sin cambios.

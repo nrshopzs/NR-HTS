@@ -1,6 +1,0 @@
-V101 - Hover de productos ajustado a 100 ms
-
-- Cambio entre imágenes cada 100 ms.
-- Sigue mostrando cada imagen solo una vez.
-- Se detiene en la última imagen.
-- Al quitar el mouse, vuelve a la imagen principal.

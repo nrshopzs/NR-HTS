@@ -1,4 +1,0 @@
-V104
-- El cambio de imágenes en hover ahora es totalmente instantáneo.
-- Se eliminó el desvanecido/efecto visual.
-- Al quitar el mouse, regresa de inmediato a la imagen principal.

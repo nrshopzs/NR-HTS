@@ -1,8 +1,0 @@
-NIÑOS RANCIOS — V127.2 · Ajuste color Guía de tallas
-
-Base: V127.1.
-
-Cambio:
-- El texto/enlace “Guía de tallas” en la página de producto usa el color #424242.
-- Se mantiene el mismo color al pasar el cursor para conservar el tono solicitado.
-- No se modificó ninguna otra función, estilo o integración.

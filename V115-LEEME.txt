@@ -1,9 +1,0 @@
-V115
-
-Cambio solicitado:
-- El texto inferior de cada beneficio puede moverse de forma independiente arriba, abajo, izquierda y derecha.
-- Controles separados para escritorio y móvil.
-- Se mantiene el control general que mueve juntos título + texto inferior.
-- El icono no se mueve con estos controles.
-
-Base: V114.

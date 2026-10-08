@@ -1,9 +1,0 @@
-Niños Rancios — V127.21 Cambio de correo + icono de ojo
-
-Cambios:
-- Corrige el mensaje erróneo “Cannot read properties of null (reading 'elements')” después de solicitar el cambio de correo.
-- La solicitud de cambio de correo sigue enviando correctamente el mensaje de confirmación.
-- Agrega icono de ojo al campo “Contraseña actual” del formulario Cambiar correo electrónico.
-- El ojo permite mostrar/ocultar la contraseña sin cambiar la lógica de seguridad.
-
-Base: V127.20.

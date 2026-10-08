@@ -1,8 +1,0 @@
-V68 - CIERRE DEL LOGIN SOLO CON X
-
-Cambio solicitado:
-- La pantalla de inicio de sesión YA NO se cierra al hacer clic en el fondo blanco.
-- Tampoco se cierra con la tecla Escape.
-- Solo se cierra al pulsar la X de la esquina superior derecha.
-
-El resto del sistema de cuentas, registro e inicio de sesión queda igual que en V67.

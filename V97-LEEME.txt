@@ -1,6 +1,0 @@
-V97 - FONDO SÓLIDO EN LA BARRA DE MENÚ
-
-- Fondo blanco 100% opaco (#fff).
-- Ya no se ve el contenido que pasa por debajo del menú.
-- Se conserva la sombra de V96.
-- Se conserva el fade al bajar y reaparecer al subir.

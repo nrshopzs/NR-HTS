@@ -1,9 +1,0 @@
-Niños Rancios — V127.36 Colores de fondo de bloques
-
-Cambios:
-- El bloque dividido debajo del hero permite cambiar claramente el color de fondo desde Administración > Portada.
-- El bloque promocional antes de la franja verde permite cambiar claramente el color de fondo desde Administración > Portada.
-- Se renombraron los controles a “Color de fondo del bloque” para que sea evidente que afectan el fondo del bloque y no solo el texto.
-- Las vistas previas del panel siguen actualizándose al cambiar el color.
-
-Base: V127.35

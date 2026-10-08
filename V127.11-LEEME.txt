@@ -1,6 +1,0 @@
-Niños Rancios — V127.11 · Acceso privado en una sola línea
-
-Cambio:
-- El título “ACCESO PRIVADO” se mantiene en una sola línea en escritorio y móvil.
-- Se amplió ligeramente el bloque de acceso y se ajustó el tamaño responsive del título para evitar saltos de línea.
-- Se conserva el resto de V127.10 sin cambios.

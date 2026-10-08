@@ -1,6 +1,0 @@
-V103 - Hover de productos ajustado a 1 ms
-
-- Cambio entre imágenes configurado a 1 ms.
-- Cada imagen se muestra solo una vez por hover.
-- La secuencia se detiene en la última imagen.
-- Al quitar el mouse, vuelve a la imagen principal.

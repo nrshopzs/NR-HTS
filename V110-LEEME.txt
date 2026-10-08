@@ -1,7 +1,0 @@
-V110
-
-Se agregaron más controles editables para la cinta de texto desde Administración > Portada:
-- Tamaño del texto
-- Separador / símbolo entre repeticiones
-- Espaciado entre elementos
-- Se mantienen los colores editables y la selección por páginas específicas

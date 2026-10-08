@@ -1,3 +1,0 @@
-V78 - Ajustes en payment-success
-1) Se eliminó el texto "NIÑOS RANCIOS" arriba de "¡GRACIAS POR TU COMPRA!"
-2) El botón "Consultar pedido" ahora es negro.

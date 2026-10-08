@@ -1,1 +1,0 @@
-V86: botones de navegación de la portada más delgados y minimalistas, con transición lateral izquierda/derecha al cambiar diapositiva manual o automáticamente.

@@ -1,8 +1,0 @@
-V100 - AJUSTE DE HOVER EN PRODUCTOS
-
-Cambios:
-- El cambio entre imágenes ahora ocurre cada 300 ms.
-- Cada imagen se muestra solo una vez por hover.
-- La secuencia avanza hasta la última imagen y se detiene ahí.
-- Al quitar el mouse, el producto regresa a la imagen principal.
-- Si vuelves a pasar el mouse, la secuencia empieza otra vez desde el inicio.
