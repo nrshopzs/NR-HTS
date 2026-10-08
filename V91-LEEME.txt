@@ -1,0 +1,37 @@
+V91 - CUPONES Y PROMOCIONES
+
+Nuevo apartado:
+Administración > Cupones y promociones
+
+Permite:
+- Crear cupones con código.
+- Crear promociones automáticas sin código.
+- Descuento por porcentaje.
+- Descuento por monto fijo.
+- Envío gratis.
+- Compra mínima.
+- Cantidad mínima de productos.
+- Descuento máximo.
+- Fecha/hora de inicio y vencimiento.
+- Límite total de usos.
+- Límite de usos por cliente.
+- Aplicar a todos los productos o solo productos seleccionados.
+- Activar/desactivar, editar y eliminar promociones.
+- Ver número de usos y estado.
+
+Reglas:
+- Las promociones no se acumulan.
+- Si el cliente introduce un cupón válido, se aplica ese cupón.
+- Si no usa código, se aplica automáticamente la promoción automática activa
+  que genere el mayor ahorro.
+- Toda validación se realiza también en el servidor.
+- Los usos se registran cuando el pedido se crea realmente.
+- Los pedidos conservan una copia de la promoción aplicada.
+
+Compatibilidad:
+- NR10 y RANCIOS10 se migran como cupones iniciales de 10%.
+- Carrito y checkout ya no tienen códigos escritos directamente en el JavaScript.
+
+IMPORTANTE:
+Conserva server/.env, server/data y assets/portada/uploads de tu instalación actual.
+Si server/data/promotions.json no existe, se crea automáticamente.

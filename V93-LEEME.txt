@@ -1,0 +1,20 @@
+V93 - MENÚ FADE COMO EL VIDEO DE REFERENCIA
+
+Corrección respecto a V92:
+- El menú ahora es FIXED, no sticky.
+- Esto permite que pueda aparecer o desaparecer incluso cuando el usuario
+  está en la mitad o al final de la página.
+- Al girar la rueda / desplazarse hacia abajo:
+    el menú baja su opacidad de 100% a 0% en aproximadamente 0.28 s.
+- Al girar la rueda / desplazarse hacia arriba:
+    el menú aumenta su opacidad de 0% a 100% en aproximadamente 0.28 s.
+- El menú NO se desplaza físicamente hacia arriba: solo se desvanece,
+  igual que en el video proporcionado.
+- Al volver al inicio de la página, siempre reaparece.
+- Se reserva el alto inicial del encabezado para que la portada no quede
+  debajo del menú al cargar la página.
+- También funciona como respaldo con touchpad, barra de desplazamiento,
+  teclado y dispositivos táctiles.
+
+No se modificaron productos, carrito, checkout, pedidos, cupones/promociones,
+entrega local ni panel administrativo.

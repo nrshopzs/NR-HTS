@@ -1,0 +1,9 @@
+V70 - CIERRE DEL MENÚ DE CUENTA CORREGIDO
+
+Ahora el menú desplegable del usuario:
+- se abre al hacer clic en el nombre;
+- se abre al hacer clic en la flecha;
+- se cierra al volver a hacer clic en el nombre;
+- se cierra al volver a hacer clic en la flecha;
+- se cierra al hacer clic en cualquier otra parte de la página;
+- conserva las opciones Perfil, Mis Pedidos y Cerrar Sesión.

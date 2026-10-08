@@ -1,0 +1,7 @@
+Niños Rancios — V127.5
+
+Cambios:
+- El botón de favoritos dentro de la página de producto ahora usa un ícono tipo corazón estilo Wix.
+- Estado normal: corazón contorneado en amarillo sobre fondo blanco.
+- Estado activo: el corazón se rellena en amarillo al dar clic, manteniendo el borde del botón.
+- Se conserva la lógica de agregar/quitar favoritos ya implementada.

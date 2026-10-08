@@ -1,0 +1,50 @@
+NIÑOS RANCIOS V127.43 — COMPATIBILIDAD WASMER / STAGING
+========================================================
+
+BASE
+----
+Esta versión parte exclusivamente de V127.42.
+V127.42 permanece como respaldo y no debe sobrescribirse.
+
+OBJETIVO
+--------
+Preparar el mismo proyecto para que Wasmer Edge lo detecte como aplicación
+Node/Express en lugar de clasificarlo como un sitio staticfile.
+
+CAMBIOS CONTROLADOS
+-------------------
+1. Se añadió package.json en la raíz con npm start -> node server.js.
+2. Se añadió server.js en la raíz como entrada mínima hacia server/server.js.
+3. Los archivos web que antes estaban en la raíz se movieron a public/.
+   Esto evita que el detector de Wasmer priorice index.html como sitio estático.
+4. server/server.js detecta public/ como raíz web cuando existe, manteniendo
+   compatibilidad con la estructura anterior si public/ no existe.
+5. server/email.js usa la misma raíz web para adjuntos/logos configurables.
+6. PostgreSQL acepta tanto DATABASE_URL (Railway/otros) como las variables
+   DB_HOST, DB_PORT, DB_NAME, DB_USERNAME y DB_PASSWORD que Wasmer inyecta.
+7. No se añadieron credenciales reales ni archivos .env.
+
+NO CAMBIÓ
+---------
+- Frontend visual, HTML, CSS y JavaScript de la tienda: solo cambiaron de carpeta.
+- Catálogo, carrito, checkout y métodos de pago.
+- Cuentas, favoritos, recuperación/cambio de contraseña y cambio de correo.
+- Pedidos, estados, rastreo, correo de pedido enviado y números aleatorios.
+- Panel de administración, mantenimiento, Colaboraciones y personalización Home.
+- Correcciones de seguridad V127.41.
+- Persistencia/transacciones PostgreSQL incorporadas en V127.42.
+
+IMPORTANTE PARA WASMER
+----------------------
+- Esta versión sigue siendo STAGING/PREPRODUCCIÓN.
+- Wasmer Edge usa instancias efímeras; PostgreSQL debe ser la fuente de verdad
+  para pedidos/inventario/clientes/sesiones cuando se active DATA_BACKEND=postgres.
+- Archivos subidos desde el panel (imágenes/videos) y otros JSON que aún no fueron
+  migrados a base de datos no deben considerarse persistencia durable en Wasmer.
+- No activar pagos reales hasta terminar las pruebas de staging.
+
+SIGUIENTE PRUEBA
+----------------
+Subir este ZIP a Wasmer como un proyecto NUEVO. Antes de desplegar, comprobar que
+Tipo de proyecto ya no aparezca como staticfile. No usar la opción Other con
+"npm install", porque ese builder fue el que produjo npm: command not found.

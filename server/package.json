@@ -1,0 +1,23 @@
+{
+  "name": "ninos-rancios-v127-43-wasmer-staging",
+  "private": true,
+  "version": "1.11.0",
+  "scripts": {
+    "start": "node server.js",
+    "security:check": "node security-smoke-test.js",
+    "db:migrate": "node migrate-json-to-postgres.js",
+    "db:check": "node database-check.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.22.3",
+    "stripe": "^17.4.0",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.0.13",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

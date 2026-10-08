@@ -1,0 +1,11 @@
+V61 - DESCRIPCIONES CON FORMATO
+
+En Productos > Editar producto, la descripción ahora permite:
+- Negritas
+- Cursivas
+- Lista con viñetas
+- Lista numerada
+- Caracteres especiales
+
+El servidor solo conserva etiquetas de formato seguras y elimina atributos HTML.
+Las descripciones anteriores siguen funcionando automáticamente.

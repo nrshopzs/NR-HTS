@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Gracias por tu compra | Niños Rancios</title>
+</head>
+<body>
+  <div data-shell-header></div>
+  <main class="order-success-page">
+    <section class="order-success-hero">
+      <h1>¡GRACIAS POR TU COMPRA!</h1>
+      <p id="success-lead">Estamos confirmando tu pago y preparando los datos de tu pedido.</p>
+    </section>
+    <section class="order-success-body">
+      <div id="stripe-result" class="order-success-card">
+        <div class="order-loading">Confirmando pago y generando pedido…</div>
+      </div>
+    </section>
+  </main>
+  <div data-shell-benefits></div>
+  <div data-shell-footer></div>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="stripe-config.js"></script>
+  <script src="app.js"></script>
+  <script>
+  mountShell('');
+  const formatMoney=n=>'MX$'+Number(n||0).toFixed(2);
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const box=document.getElementById('stripe-result');
+  const lead=document.getElementById('success-lead');
+  function clearPurchasedCart(){localStorage.removeItem('nr_cart_v3');sessionStorage.removeItem('nr_checkout_state');renderCartCount();}
+  const fmtDate=value=>{if(!value)return '—';const d=new Date(value);return Number.isNaN(d.getTime())?'—':d.toLocaleString('es-MX',{dateStyle:'medium',timeStyle:'short'})};
+  function transferDetailsHtml(order){
+    if(order.paymentMethod!=='Transferencia bancaria'||!order.transfer)return '';
+    const t=order.transfer,b=t.bank||{},proof=t.proof;
+    const accountRows=[
+      b.bankName?`<div><span>Banco</span><strong>${esc(b.bankName)}</strong></div>`:'',
+      b.accountHolder?`<div><span>Titular</span><strong>${esc(b.accountHolder)}</strong></div>`:'',
+      b.clabe?`<div><span>CLABE</span><strong class="transfer-copy-value">${esc(b.clabe)}</strong></div>`:'',
+      b.accountNumber?`<div><span>Número de cuenta</span><strong class="transfer-copy-value">${esc(b.accountNumber)}</strong></div>`:'',
+      b.cardNumber?`<div><span>Número de tarjeta</span><strong class="transfer-copy-value">${esc(b.cardNumber)}</strong></div>`:''
+    ].filter(Boolean).join('');
+    const upload=(b.proofUploadEnabled!==false&&order.paymentStatus!=='Pagado'&&order.status!=='Cancelado')?`<form class="transfer-proof-form" id="transfer-proof-form"><label>Subir comprobante<input id="transfer-proof-file" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required><small>JPG, PNG, WEBP o PDF · máximo 8 MB</small></label><button type="submit">${proof?'Reemplazar comprobante':'Enviar comprobante'}</button><p id="transfer-proof-message" class="transfer-proof-message">${proof?`Comprobante recibido: ${esc(proof.originalName||'archivo')} · ${esc(fmtDate(proof.uploadedAt))}`:''}</p></form>`:(proof?`<div class="transfer-proof-received">✓ Comprobante recibido · ${esc(fmtDate(proof.uploadedAt))}</div>`:'');
+    return `<section class="transfer-payment-box"><div class="transfer-payment-head"><div><span>TRANSFERENCIA BANCARIA</span><h3>Datos para realizar tu pago</h3></div><strong>${formatMoney(order.totals.total)}</strong></div><div class="transfer-bank-grid">${accountRows}<div><span>Referencia</span><strong>${esc(t.reference||order.orderNumber)}</strong></div><div><span>Plazo sugerido</span><strong>${esc(fmtDate(t.expiresAt))}</strong></div></div>${b.instructions?`<p class="transfer-instructions">${esc(b.instructions)}</p>`:''}${upload}</section>`;
+  }
+  function bindTransferProof(order){
+    const form=document.getElementById('transfer-proof-form');if(!form)return;
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();const input=document.getElementById('transfer-proof-file'),msg=document.getElementById('transfer-proof-message'),btn=form.querySelector('button');
+      if(!input?.files?.[0])return;
+      const body=new FormData();body.append('orderNumber',order.orderNumber);body.append('email',order.customer?.email||'');body.append('proof',input.files[0]);
+      btn.disabled=true;btn.textContent='Enviando…';if(msg)msg.textContent='Subiendo comprobante…';
+      try{const response=await fetch('/api/orders/transfer-proof',{method:'POST',body});const data=await response.json().catch(()=>({}));if(!response.ok||!data.order)throw new Error(data.error||'No fue posible subir el comprobante.');showOrder(data.order)}
+      catch(err){if(msg)msg.textContent=err.message||'No fue posible subir el comprobante.';btn.disabled=false;btn.textContent='Enviar comprobante'}
+    });
+  }
+  function showOrder(order){
+    sessionStorage.setItem('nr_last_order',JSON.stringify({orderNumber:order.orderNumber,email:order.customer?.email||''}));
+    clearPurchasedCart();
+    const pending=order.paymentStatus!=='Pagado';
+    if(pending&&order.paymentMethod==='Contraentrega')lead.textContent='Tu pedido fue recibido. Pagarás al momento de la entrega.';
+    else if(pending&&order.paymentMethod==='Transferencia bancaria')lead.textContent='Tu pedido fue creado. Realiza la transferencia y envía tu comprobante para que podamos confirmar el pago.';
+    else lead.textContent='Tu pago fue confirmado y recibimos correctamente tu pedido.';
+    const address=[order.customer?.calle,order.customer?.colonia,order.customer?.cp,order.customer?.ciudad,order.customer?.estado,order.customer?.pais].filter(Boolean).map(esc).join(', ');
+    box.innerHTML=`
+      <div class="order-success-check">${order.paymentMethod==='Transferencia bancaria'&&order.paymentStatus!=='Pagado'?'⏳':'✓'}</div>
+      <div class="order-success-status">${order.paymentMethod==='Contraentrega'?'PEDIDO CONFIRMADO · CONTRAENTREGA':order.paymentMethod==='Transferencia bancaria'&&order.paymentStatus!=='Pagado'?'PEDIDO CREADO · PAGO PENDIENTE':'PAGO CONFIRMADO'}</div>
+      <h2>Pedido ${esc(order.orderNumber)}</h2>
+      <p class="order-success-message">Gracias por comprar en Niños Rancios. Conserva tu número de pedido para cualquier seguimiento.</p>
+      <div class="order-success-grid">
+        <div><span>Estado del pedido</span><strong>${esc(order.status)}</strong></div>
+        <div><span>Método de pago</span><strong>${esc(order.paymentMethod)}</strong></div>
+        <div><span>Cliente</span><strong>${esc([order.customer?.nombre,order.customer?.apellidos].filter(Boolean).join(' ')||'—')}</strong></div>
+        <div><span>Correo</span><strong>${esc(order.customer?.email||'—')}</strong></div>
+      </div>
+      <div class="order-success-products">
+        <h3>Resumen de tu compra</h3>
+        ${order.items.map(item=>`<div class="order-success-item"><div><strong>${esc(item.name)}</strong><small>${esc(item.color)} · Talla ${esc(item.size)} · Cant. ${item.qty}</small></div><span>${formatMoney(item.lineTotal)}</span></div>`).join('')}
+      </div>
+      ${address?`<div class="order-success-address"><h3>Dirección de envío</h3><p>${address}</p></div>`:''}
+      ${transferDetailsHtml(order)}
+      <div class="order-success-totals">
+        <div><span>Subtotal</span><strong>${formatMoney(order.totals.subtotal)}</strong></div>
+        ${order.totals.discount?`<div><span>Descuento</span><strong>- ${formatMoney(order.totals.discount)}</strong></div>`:''}
+        <div><span>Envío</span><strong>${order.totals.shipping===0?'Gratis':formatMoney(order.totals.shipping)}</strong></div>
+        <div class="grand"><span>${order.paymentStatus==='Pagado'?'Total pagado':'Total a pagar'}</span><strong>${formatMoney(order.totals.total)}</strong></div><div class="order-tax-note">IVA incluido</div>
+      </div>
+      <div class="order-success-actions"><a href="order-lookup.html?order=${encodeURIComponent(order.orderNumber)}">Consultar pedido</a><a class="secondary" href="shop-all.html">Seguir comprando</a></div>`;
+    bindTransferProof(order);
+  }
+  async function confirmMercadoPago(returnToken,paymentId,attempts=6){
+    let lastData={};
+    for(let attempt=0;attempt<attempts;attempt++){
+      const response=await fetch('/api/mercadopago/finalize-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({returnToken,paymentId})});
+      const data=await response.json().catch(()=>({}));
+      if(response.ok&&data.order)return {response,data};
+      if(response.status===202&&data.pending){
+        lastData=data;
+        if(attempt<attempts-1)await new Promise(resolve=>setTimeout(resolve,1500));
+        continue;
+      }
+      const err=new Error(data.error||'No fue posible confirmar el pago de Mercado Pago.');
+      err.response=response;throw err;
+    }
+    return {pending:true,data:lastData};
+  }
+  (async()=>{
+    const params=new URLSearchParams(location.search);
+    const paymentIntentId=params.get('payment_intent');
+    const provider=params.get('provider');
+    const paypalOrderId=params.get('token');
+    const mercadoPagoReturnToken=params.get('mp_ref');
+    const mercadoPagoPaymentId=params.get('payment_id')||params.get('collection_id')||'';
+    const orderNumber=params.get('orderNumber');
+    const email=params.get('email');
+    try{
+      let response,data;
+      if(paymentIntentId){
+        response=await fetch('/api/stripe/finalize-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentIntentId})});
+      }else if(provider==='paypal'&&paypalOrderId){
+        lead.textContent='Confirmando tu pago con PayPal y generando tu pedido…';
+        response=await fetch('/api/paypal/capture-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:paypalOrderId})});
+      }else if(provider==='mercadopago'&&mercadoPagoReturnToken){
+        lead.textContent='Confirmando tu pago con Mercado Pago y generando tu pedido…';
+        const result=await confirmMercadoPago(mercadoPagoReturnToken,mercadoPagoPaymentId);
+        if(result.pending){
+          lead.textContent='Mercado Pago todavía está procesando tu pago.';
+          box.innerHTML=`<div class="order-success-error"><h2>Pago en proceso</h2><p>Mercado Pago todavía no reporta el pago como acreditado. No vuelvas a pagar.</p><p>Cuando el pago sea acreditado, el webhook de Mercado Pago confirmará el pedido automáticamente. Si tarda demasiado, contáctanos con el comprobante de Mercado Pago.</p><a href="shop-all.html">Volver a la tienda</a></div>`;
+          return;
+        }
+        response=result.response;data=result.data;
+      }else if(orderNumber&&email){
+        response=await fetch('/api/orders/lookup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderNumber,email})});
+      }else{
+        box.innerHTML='<h2>No encontramos la referencia del pedido.</h2><p><a href="shop-all.html">Volver a la tienda</a></p>';return;
+      }
+      if(!data)data=await response.json().catch(()=>({}));
+      if(!response.ok||!data.order)throw new Error(data.error||'No fue posible generar el pedido.');
+      showOrder(data.order);
+    }catch(e){
+      if(provider==='paypal')lead.textContent='Regresaste de PayPal, pero necesitamos confirmar los datos del pedido.';
+      else if(provider==='mercadopago')lead.textContent='Regresaste de Mercado Pago, pero necesitamos confirmar los datos del pedido.';
+      else lead.textContent='El pago regresó de Stripe, pero necesitamos confirmar los datos del pedido.';
+      box.innerHTML=`<div class="order-success-error"><h2>No pudimos finalizar el pedido</h2><p>${esc(e.message||'Intenta nuevamente.')}</p><p>No realices otro pago. Conserva esta página y revisa el estado con el proveedor de pago antes de intentarlo otra vez.</p><a href="contact.html">Contactar soporte</a></div>`;
+    }
+  })();
+  </script>
+</body>
+</html>

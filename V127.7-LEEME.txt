@@ -1,0 +1,19 @@
+Niños Rancios — V127.7 · Newsletter + correo de bienvenida
+
+Cambios sobre V127.6:
+- Después de una suscripción correcta al formulario “¡ÚNETE!”, se envía automáticamente un correo de bienvenida.
+- El remitente es BREVO_FROM_CONTACT (contacto@niñosrancios.com / dominio Punycode en .env).
+- El correo utiliza el mismo diseño global de emails de Niños Rancios.
+- Se agregó la plantilla editable “Newsletter · bienvenida” en Administración → Correos → Plantillas y diseño.
+- Por seguridad y para evitar molestias, el correo de bienvenida se envía una sola vez por dirección aunque el usuario vuelva a enviar el formulario.
+- Si Brevo Marketing registra correctamente el contacto pero el correo SMTP de bienvenida falla, la suscripción NO se pierde; el error solo se registra en el servidor.
+- El formulario continúa mostrándose únicamente en escritorio, no en móvil.
+
+No se requieren nuevas variables de entorno. Conserva las de V127.6:
+BREVO_API_KEY=...
+BREVO_NEWSLETTER_LIST_ID=2
+BREVO_SMTP_HOST=...
+BREVO_SMTP_PORT=...
+BREVO_SMTP_USER=...
+BREVO_SMTP_KEY=...
+BREVO_FROM_CONTACT=...

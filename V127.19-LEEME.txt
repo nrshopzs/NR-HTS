@@ -1,0 +1,13 @@
+Niños Rancios — V127.19 Registro con confirmación de contraseña
+
+Cambios:
+- La lista de requisitos de contraseña permanece oculta al abrir “Crear cuenta”.
+- Al comenzar a escribir en “Contraseña”, se muestran al mismo tiempo:
+  1) los requisitos de contraseña;
+  2) el nuevo campo “Repetir contraseña”.
+- “Repetir contraseña” incluye el mismo icono de ojo para mostrar/ocultar el contenido.
+- El registro no continúa si ambas contraseñas no coinciden.
+- Al borrar por completo la contraseña principal, la sección vuelve a ocultarse y se limpia la confirmación.
+- No se modificaron las reglas de contraseña ni la lógica del servidor de cuentas.
+
+Base: V127.18.

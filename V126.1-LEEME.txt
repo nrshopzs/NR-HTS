@@ -1,0 +1,18 @@
+NIÑOS RANCIOS — V126.1 · CORRECCIÓN DE BOTONES DE SEGURIDAD
+
+Base: V126 (V125 continúa siendo la base estable hasta terminar las pruebas).
+
+Corrección principal:
+- Los correos de verificación de cuenta, recuperación de contraseña y cambio de correo muestran obligatoriamente su botón de acción.
+- La URL de esos botones se genera en el servidor y no depende de que una plantilla antigua ya tuviera configurado buttonUrl.
+- También se incluye debajo un enlace de respaldo visible por si el cliente de correo no muestra o bloquea el botón.
+- Se corrigió la migración de plantillas: las plantillas nuevas de cuenta heredan sus botones predeterminados al venir desde V125/V124.
+
+Para probar desde tu V126 actual:
+1. Copia server/.env de tu V126 actual a V126.1.
+2. Copia server/data/ de tu V126 actual a V126.1 si quieres conservar usuarios/pedidos de la prueba.
+3. Copia assets/email/uploads/ si tienes logo personalizado.
+4. Ejecuta npm install y npm start dentro de server.
+5. Registra una cuenta nueva o usa “Reenviar verificación”.
+6. El email debe mostrar “Confirmar mi correo” y también un enlace de respaldo.
+7. Prueba después “Olvidé mi contraseña” y cambio de correo.

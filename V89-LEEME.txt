@@ -1,0 +1,11 @@
+V89 - COMPRAR AHORA + CÓDIGO PROMOCIONAL + NOTA
+
+- "Comprar ahora" valida color/talla/inventario, agrega el producto y abre checkout.
+- "Ingresar código promocional" ya funciona en carrito.
+  Códigos de prueba existentes: NR10 y RANCIOS10 = 10% de descuento.
+- El descuento aparece inmediatamente en el resumen del carrito y se conserva en checkout.
+- "Agregar una nota" permite guardar hasta 500 caracteres.
+- La nota pasa al checkout, se guarda en pedidos Stripe y aparece en Administración > Pedido.
+- El botón PayPal del carrito ahora abre checkout dejando PayPal seleccionado.
+
+Conserva tu server/.env, server/data y assets/portada/uploads al actualizar.

@@ -1,0 +1,9 @@
+Niños Rancios — V127.30 Línea separadora corregida
+
+Cambios:
+- Se corrigió la línea decorativa debajo de “🔥 HOT 🔥” en la página principal.
+- Antes se dibujaba usando el carácter tipográfico “—”, que en algunos navegadores/fuentes podía mostrarse como bloques o símbolos extraños.
+- Ahora es una línea CSS real de 24 px × 2 px, centrada y estable en escritorio y móvil.
+- Se revisaron las otras páginas con separadores decorativos (Envíos, Privacidad, Nosotros, Colaboraciones, Contacto y Puntos de venta); esas ya usaban líneas CSS y no requerían corrección.
+
+Base: V127.29.

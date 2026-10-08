@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Contacto | Niños Rancios</title>
+</head>
+<body>
+  <div data-shell-header></div>
+
+  <main class="contact-page-alt">
+    <section class="contact-title-band">
+      <h1>CONTÁCTANOS</h1>
+    </section>
+
+    <section class="contact-dark-section">
+      <div class="contact-form-shell">
+        <form class="contact-form-alt" id="contact-form">
+          <label class="contact-field-alt">
+            <span>Nombre *</span>
+            <input type="text" name="nombre" maxlength="100" autocomplete="given-name" required>
+          </label>
+          <label class="contact-field-alt">
+            <span>Apellidos</span>
+            <input type="text" name="apellidos" maxlength="100" autocomplete="family-name">
+          </label>
+          <label class="contact-field-alt full">
+            <span>Correo electrónico *</span>
+            <input type="email" name="email" maxlength="254" autocomplete="email" required>
+          </label>
+          <label class="contact-field-alt full">
+            <span>Asunto</span>
+            <input type="text" name="asunto" maxlength="160">
+          </label>
+          <label class="contact-field-alt full">
+            <span>Mensaje *</span>
+            <textarea name="mensaje" maxlength="4000" required></textarea>
+          </label>
+          <label class="contact-honeypot" aria-hidden="true">Sitio web<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit" class="contact-submit-alt">Enviar</button>
+          <p class="contact-form-status" id="contact-form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="stockists-bottom" id="stockists">
+        <h2>PUNTOS DE VENTA</h2>
+        
+        <p>Próximamente...</p>
+      </div>
+    </section>
+  </main>
+
+  <div data-shell-benefits></div>
+  <div data-shell-footer></div>
+
+  <script src="app.js"></script>
+  <script>
+    mountShell('contact');
+    (()=>{
+      const form=document.getElementById('contact-form');
+      const status=document.getElementById('contact-form-status');
+      if(!form||!status)return;
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();
+        const button=form.querySelector('button[type="submit"]');
+        const payload=Object.fromEntries(new FormData(form).entries());
+        button.disabled=true;
+        button.textContent='Enviando…';
+        status.className='contact-form-status';
+        status.textContent='';
+        try{
+          const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+          const data=await response.json().catch(()=>({}));
+          if(!response.ok)throw new Error(data.error||'No fue posible enviar el mensaje.');
+          form.reset();
+          status.className='contact-form-status success';
+          status.textContent=data.message||'Recibimos tu mensaje. Te responderemos lo antes posible.';
+        }catch(error){
+          status.className='contact-form-status error';
+          status.textContent=error.message||'No fue posible enviar el mensaje. Inténtalo nuevamente.';
+        }finally{
+          button.disabled=false;
+          button.textContent='Enviar';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

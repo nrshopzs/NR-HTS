@@ -1,0 +1,5 @@
+V105 - SIN ZOOM EN PRODUCTOS
+
+Único cambio:
+- Se eliminó el aumento/zoom de la imagen al pasar el mouse sobre un producto.
+- Se conservaron intactos los demás efectos y funciones del hover.

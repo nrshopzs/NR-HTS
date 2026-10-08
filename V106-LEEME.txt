@@ -1,0 +1,2 @@
+V106
+- Se cambió el título de la sección de productos destacados en la portada de “🔥 DESTACADOS 🔥” a “🔥 HOT 🔥”.

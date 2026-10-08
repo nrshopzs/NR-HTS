@@ -1,0 +1,19 @@
+NIÑOS RANCIOS — V127.1 · SVG de Guía de tallas
+
+Base: V127 — Guía de tallas.
+
+Cambios de esta revisión:
+- Se sustituyó el icono generado anteriormente junto al texto “Guía de tallas” por el archivo SVG proporcionado por el usuario.
+- Se sustituyó el diagrama generado anteriormente dentro de la ventana de Guía de tallas por el archivo Playera.svg proporcionado por el usuario.
+- El mismo Playera.svg se usa en la vista previa del apartado Administración > Guía de tallas.
+- No se modificaron las medidas, la tabla, la lógica del modal, cuentas, pagos, correos ni demás funciones de V127.
+
+Archivos añadidos:
+- assets/size-guide/guia-icon.svg
+- assets/size-guide/playera.svg
+
+Prueba recomendada:
+1. Abrir cualquier producto.
+2. Confirmar que junto a “Guía de tallas” aparezca el nuevo icono SVG.
+3. Abrir la guía y confirmar que se muestre Playera.svg en lugar del diagrama anterior.
+4. Revisar también Administración > Guía de tallas.

@@ -1,0 +1,15 @@
+V120 — Mercado Pago Checkout Pro
+
+Base: V119 Transferencia bancaria.
+
+Se agregó:
+- Checkout Pro de Mercado Pago usando Orders API.
+- Creación server-side de orders con X-Idempotency-Key.
+- Redirección mediante checkout_url.
+- Regreso a Niños Rancios y confirmación server-side del estado real de la order.
+- Webhook /api/mercadopago/webhook.
+- Validación HMAC-SHA256 de x-signature usando MERCADOPAGO_WEBHOOK_SECRET.
+- Idempotencia: una misma order de Mercado Pago no crea dos pedidos ni descuenta dos veces inventario.
+- Soporte de PUBLIC_BASE_URL HTTPS para pruebas con túnel y para producción.
+
+No se eliminaron Stripe, PayPal, transferencia bancaria ni contraentrega.

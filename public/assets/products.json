@@ -1,0 +1,258 @@
+[
+  {
+    "id": "the-kids-want-acid",
+    "name": "The Kids Want Acid - T-Shirt",
+    "price": "220.00",
+    "img": "assets/productos/the-kids-want-acid-negro.png",
+    "category": "all",
+    "colors": [
+      "Negro",
+      "Gris",
+      "Blanco"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Negro": "assets/productos/the-kids-want-acid-negro.png",
+      "Gris": "assets/productos/the-kids-want-acid-gris.png",
+      "Blanco": "assets/productos/the-kids-want-acid-blanco.png"
+    },
+    "inventory": {
+      "Negro": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      },
+      "Gris": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 0
+      },
+      "Blanco": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "santos-cogollos",
+    "name": "Santos Cogollos - T-Shirt",
+    "price": "145.00",
+    "img": "assets/productos/santos-cogollos-blanco.png",
+    "category": "all",
+    "colors": [
+      "Blanco"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Blanco": "assets/productos/santos-cogollos-blanco.png"
+    },
+    "inventory": {
+      "Blanco": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "make-us-worthy",
+    "name": "Make Us Worthy - T-Shirt",
+    "price": "149.00",
+    "img": "assets/productos/make-us-worthy-negro.png",
+    "category": "all",
+    "colors": [
+      "Negro",
+      "Blanco",
+      "Gris"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Negro": "assets/productos/make-us-worthy-negro.png",
+      "Blanco": "assets/productos/make-us-worthy-blanco.png",
+      "Gris": "assets/productos/make-us-worthy-gris.png"
+    },
+    "inventory": {
+      "Negro": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      },
+      "Blanco": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      },
+      "Gris": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "bad-boy",
+    "name": "Bad Boy - T-Shirt",
+    "price": "149.00",
+    "img": "assets/productos/bad-boy-negro.png",
+    "category": "all",
+    "colors": [
+      "Negro"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Negro": "assets/productos/bad-boy-negro.png"
+    },
+    "inventory": {
+      "Negro": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "die-hight",
+    "name": "Die Hight - T-Shirt",
+    "price": "149.00",
+    "img": "assets/productos/die-hight-blanco.png",
+    "category": "all",
+    "colors": [
+      "Blanco"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Blanco": "assets/productos/die-hight-blanco.png"
+    },
+    "inventory": {
+      "Blanco": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "sightless",
+    "name": "Sightless - T-Shirt",
+    "price": "149.00",
+    "img": "assets/productos/sightless-negro.png",
+    "category": "all",
+    "colors": [
+      "Negro"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Negro": "assets/productos/sightless-negro.png"
+    },
+    "inventory": {
+      "Negro": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  },
+  {
+    "id": "we-out-here",
+    "name": "We Out Here - T-Shirt",
+    "price": "159.00",
+    "img": "assets/productos/we-out-here-blanco.png",
+    "category": "all",
+    "colors": [
+      "Blanco"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Blanco": "assets/productos/we-out-here-blanco.png"
+    },
+    "inventory": {
+      "Blanco": {
+        "CH": 0,
+        "M": 0,
+        "G": 0,
+        "XG": 0
+      }
+    }
+  },
+  {
+    "id": "halloween-is-over-just-chill",
+    "name": "Halloween is Over Just Chill - T-Shirt",
+    "price": "169.00",
+    "img": "assets/productos/halloween-is-over-just-chill-negro.png",
+    "category": "all",
+    "colors": [
+      "Negro"
+    ],
+    "sizes": [
+      "CH",
+      "M",
+      "G",
+      "XG"
+    ],
+    "description": "Playera unisex de manga corta, corte Regular Fit y cuello redondo. Estampado frontal en serigrafía con tinta base agua. Confeccionada en tela 100% algodón peinado.",
+    "variantImages": {
+      "Negro": "assets/productos/halloween-is-over-just-chill-negro.png"
+    },
+    "inventory": {
+      "Negro": {
+        "CH": 10,
+        "M": 10,
+        "G": 10,
+        "XG": 10
+      }
+    }
+  }
+]

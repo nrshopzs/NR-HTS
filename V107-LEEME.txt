@@ -1,0 +1,14 @@
+V107
+
+Se agregó una cinta de texto animada antes de la franja verde de beneficios.
+
+Incluye:
+- Cinta negra con texto blanco en desplazamiento continuo.
+- Editable desde el panel de administración > Portada.
+- Opciones para mostrar/ocultar, cambiar el texto y ajustar la velocidad (segundos por recorrido).
+
+Archivos principales actualizados:
+- app.js
+- styles.css
+- admin.js
+- server/homepage.js

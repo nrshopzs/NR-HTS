@@ -1,0 +1,10 @@
+Niños Rancios — V127.13 Iconos recortados del carrito
+
+Cambios realizados:
+- Se reemplazó el SVG de "Ingresar código promocional" por la versión recortada del icono de etiqueta.
+- Se reemplazó el SVG de "Agregar una nota" por la versión recortada del icono de nota.
+- Se reemplazó el SVG de eliminar producto por la versión recortada del icono de bote de basura.
+- No se modificó la lógica del carrito; solo se actualizaron los archivos SVG para que se visualicen con mejor tamaño y encuadre.
+
+Base:
+- Esta versión parte de la V127.12.
